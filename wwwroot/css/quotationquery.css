@@ -1,0 +1,73 @@
+﻿
+@media screen and (min-height: 320px) {
+    .signiframe {
+        width: 99%;
+        height: 260px;
+        padding-top: 2px;
+    }
+}
+@media screen and (min-device-height: 375px) and (max-device-height: 992px) {
+    .signiframe {
+        width: 99%;
+        height: 300px;
+    }
+}
+@media screen and (min-width: 992px) {
+    .signiframe {
+        width: 700px;
+        height: 400px;
+    }
+}
+
+/*行動投保區*/
+/* Media Query ，也就是當寬度 < 768 px 時將載入下面這段 CSS :*/
+@media only screen and (max-width: 768px) {
+    #divKYCOnline .txtAlignRC {
+        padding-left: 15px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .topTitileSize {
+        font-size: 12px;
+        padding-left: 0px;
+        padding-right: 0px;
+        font-weight: bold;
+    }
+}
+/* Media Query ，也就是當寬度 < 480 px 時將載入下面這段 CSS :*/
+@media only screen and (max-width: 480px) {
+    #divKYCOnline .txtAlignRC {
+        padding-left: 15px;
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+/* Media Query ，也就是當寬度 < 320 px 時將載入下面這段 CSS :*/
+@media only screen and (max-width: 320px) {
+    #divKYCOnline .txtAlignRC {
+        padding-left: 15px;
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+/* Media Query ，也就是當寬度 > 768 px 時將載入下面這段 CSS :*/
+@media only screen and (min-width: 768px) {
+    #divKYCOnline .txtAlignRC {
+        padding-left: 15px;
+        padding-right: 10px;
+        text-align: right;
+        font-weight: bold;
+    }
+
+    .topTitileSize {
+        font-weight: bold;
+    }
+}
+
+#divKYCOnline .td-title {
+    /*white-space: nowrap;*/
+    color: #cc0000;
+}

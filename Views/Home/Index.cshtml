@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<main-panel main-panel-id="mainContent" title-name="UI 元件">
+    <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 col-lg-offset-8 input-group">
+        <span style="color:deepskyblue;">
+            ※1.menu 元件。 <br />
+            ※2.main-panel 元件。 <br />
+            ※3.panel 元件。      <br />
+            ※4.selecter 元件。   
+        </span>
+    </div>
+    <div class="row"></div>
+    <panel panel-name="panel元件" panel-id="divPanel">
+        <selecter title-name="selecter元件" select-id="selId" input-id="iptAGNTNAME" v-model="formdata.seletvalue"></selecter>
+        <input-string title-name="input元件(文字)" v-model="formdata.stringvalue" place-holder="請輸入文字" set-disabled="false"></input-string>
+    </panel>
+</main-panel>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/site.js"></script>
+}

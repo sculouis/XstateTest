@@ -1,0 +1,1101 @@
+﻿@{
+    ViewBag.Title = "QuotationEdit";
+}
+
+<input id="hidmode" name="hidmode" type="hidden" value="@ViewBag.hidmode" />
+<input id="hidagntnum" name="hidagntnum" type="hidden" value="@ViewBag.hidagntnum" />
+<input id="hidbranchlist" name="hidbranchlist" type="hidden" value="@ViewBag.hidbranchlist" />
+<input id="hidagentIdList" name="hidagentIdList" type="hidden" value="@ViewBag.hidagentIdList" />
+<input id="hidchannelCode" name="hidchannelCode" type="hidden" value="@ViewBag.hidchannelCode" />
+<input id="hidagentReCodeList" name="hidagentReCodeList" type="hidden" value="@ViewBag.hidagentReCodeList" />
+<input id="hidsalesReCodeList" name="hidsalesReCodeList" type="hidden" value="@ViewBag.hidsalesReCodeList" />
+<input id="hidbeforeAccount" name="hidbeforeAccount" type="hidden" value="@ViewBag.hidbeforeAccount" />
+<input id="hidagentName" name="hidagentName" type="hidden" value="@ViewBag.hidagentName" />
+<input id="hidCHDRNUM" name="hidCHDRNUM" type="hidden" value="@ViewBag.CHDRNUM" />
+<input id="hidCHDRNUMType" name="hidCHDRNUMType" type="hidden" value="@ViewBag.CHDRNUMType" />
+<input id="hidTollClterData" name="hidTollClterData" type="hidden" value="@ViewBag.hidTollClterData" />@*收費員資料*@
+<script src="/Content/JavaScript/Jquery/jquery.min.js"></script>
+
+<div class="panel panel-info">
+    <h4 style="font-family:標楷體;color: #4d828d; padding-left:5px;">
+        <I class="fa fa-angle-double-right"></I> <span id="spanTitle">建立新報價單</span>
+    </h4>
+    <div class="panel panel-info">
+        <div id="divQuoteDate" class="panel-body">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">報價日期</span>
+                <input id="iptQuotDate" type="text" class="form-control upperCase" disabled>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">報價單編號</span>
+                <input id="iptQUOTENO" value="" type="text" class="form-control upperCase">
+                <span class="input-group-btn">
+                    <button id="btnQryQUOTENO" class="btn btn-default" type="button" title="複製報價單">
+                        <i class="fa fa-files-o"></i>
+                    </button>
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 input-group" style="display:none;">
+                <span class="input-group-addon">上年度保單號碼</span>
+                <input id="iptPOLNUM" type="text" class="form-control upperCase" maxlength="8">
+                <span class="input-group-btn">
+                    <button id="btnQryPOLNUM" class="btn btn-default" type="button" title="依照上年度保單號碼查詢">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+                <span class="input-group-btn" style="display:none;">
+                    <button id="btnUnPOLNUM" class="btn btn-default" type="button" title="解鎖">
+                        <i class="fa fa-unlock"></i>
+                    </button>
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 input-group" style="display:none;">
+                <span class="input-group-addon">上年度強制證號</span>
+                <input id="iptOLDPOLNUM" type="text" class="form-control upperCase" maxlength="10">
+                <span class="input-group-btn">
+                    <button id="btnQryOLDPOLNUM" class="btn btn-default" type="button" title="依照上年度強制證號查詢">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+                <span class="input-group-btn" style="display:none;">
+                    <button id="btnUnOLDPOLNUM" class="btn btn-default" type="button" title="解鎖">
+                        <i class="fa fa-unlock"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--==[經手人/業務員資料]======================================================================-->
+    <div class="panel panel-info">
+        <div class="panel-heading data">
+            經手人/業務員資料
+        </div>
+        <div id="divSalesmanData" class="panel-body">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon" for="selAGNTNUM"><span style="color:red;">＊</span>經手人</span>
+                <select class="form-control selectpicker show-menu-arrow oldval"
+                        data-header="請輸入至少2個關鍵字"
+                        data-source="ajax"
+                        liveSearchStyle="contains"
+                        showContent="true"
+                        data-live-search="true"
+                        id="selAGNTNUM"
+                        required></select>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <input id="iptAGNTNAME" type="text" class="form-control" maxlength="50" disabled>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+                <span class="input-group-addon">車商代碼</span>
+                <select id="selVendorNo" class="form-control"></select>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+                <span class="input-group-addon">車商業務員編號</span>
+                <input id="iptVendorSalesNo" type="text" class="form-control upperCase" maxlength="10">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon"><span style="color:red;">＊</span>單位別</span>
+                <input id="iptBranchNo" type="text" class="form-control upperCase" required maxlength="2">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 input-group">
+                <span class="input-group-addon">業務人員編號</span>
+                <input id="iptCNTBRANCH" type="text" class="form-control upperCase" maxlength="8">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 input-group">
+                <span class="input-group-addon">業務員登錄字號</span>
+                <input id="iptSalesmanRegNo" type="text" class="form-control upperCase" maxlength="10" disabled>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">通路別</span>
+                <input id="iptCHL1" type="text" class="form-control upperCase" maxlength="50" disabled>
+                <span class="input-group-addon" style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span>
+                <select id="selCHL2" class="form-control"></select>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">服務人員</span>
+                <input id="iptGenareaNM" type="text" class="form-control upperCase" maxlength="50" disabled>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">電話</span>
+                <input id="iptAgentTEL" type="text" class="form-control upperCase" maxlength="16" disabled>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">傳真</span>
+                <input id="iptAgentFAX" type="text" class="form-control upperCase" maxlength="16" disabled>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">E-mail</span>
+                <input id="iptAgentEMail" type="text" class="form-control upperCase" disabled>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">整批業務編號</span>
+                <input class="form-control upperCase" id="iptAmwayNo" type="text" maxlength="8">
+                <span class="input-group-addon" style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span>
+                <select class="form-control" id="selPrnWayNo" style="padding-left:5px; min-width: 100px !important;"></select>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">收費員代號</span>
+                <input id="iptTollClterNo" type="text" class="form-control upperCase" maxlength="2">
+            </div>
+            <div class="row"></div>
+            <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group">
+                <button type="button" id="btnNext1" class="btn btn-primary" style="width:100%;"><i class="fa fa-arrow-down"></i> 下一步</button>
+            </div>
+            <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group" style="display:none;">
+                <button type="button" id="btnEdit1" class="btn btn-success" style="width:100%;"><i class="fa fa-unlock"></i> 編輯</button>
+            </div>
+        </div>
+    </div>
+    <!--==[被保險人及要保人資料]===================================================================-->
+    <div class="panel panel-info">
+        <div class="panel-heading data">
+            被保險人及要保人資料
+        </div>
+        <!--==[被保險人資料]===================================================================-->
+        <div id="divInsurerData" class="panel-body" style="">
+            <label style="color:#3a87ad; margin-bottom:0px;">被保險人資料</label>
+            <div class="row"></div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+                <span class="input-group-addon">客戶代碼</span>
+                <input id="iptCTL_CLNTNUM" type="text" class="form-control" disabled>
+                <span class="input-group-btn" style="display:none;">
+                    <button id="btnUnCTLCustID" class="btn btn-default" type="button" title="解鎖"><i class="fa fa-unlock"></i></button>
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon"><span style="color:red;">＊</span>客戶類別</span>
+                <div class="input-group-addon" style="width:0%; background-color:white;border: 1px solid #cccccc;height:34px;">
+                    <label style="font-weight:normal; margin-bottom:0px;"><input id="rdoCTLCustType" name="rdoCTLCustType" value="P" type="radio" class="label_cbx" openinput="CLTCTYPE" />自然人</label>
+                    <label style="font-weight:normal; margin-bottom:0px;"><input id="rdoCTLCustType" name="rdoCTLCustType" value="C" type="radio" class="label_cbx" openinput="CLTCTYPE" />法人</label>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon"><span style="color:red;">＊</span>國別</span>
+                <select id="selCTLNation" class="form-control" required CLTCTYPE="P"></select>
+            </div>
+            <div class="col-lg-4 col-md-10 col-sm-10 col-xs-12 input-group">
+                <span class="input-group-addon"><span style="color:red;">＊</span>被保險人ID/公司統編</span>
+                <input id="iptCTLCustID" type="text" class="form-control upperCase" required maxlength="10">
+            </div>
+            <div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 input-group">
+                <button id="btnCTLCustID" type="button" style="width:99%" class="btn btn-info" data-toggle="modal" onclick="return chkCustInfoOpen(this);"><i class="fa fa-search"></i> 已投保客戶查詢</button>
+            </div>
+            <div class="row"></div>
+            <div class="col-lg-6 col-md-10 col-sm-10 col-xs-12 input-group">
+                <span class="input-group-addon"><span style="color:red;">＊</span>姓名/公司名稱</span>
+                <span class="input-group-addon input-group-narrow"></span>
+                <input id="iptCTLName" type="text" class="form-control upperCase hftofl" required maxlength="50">
+            </div>
+            <div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 input-group">
+                <button id="btnCTLCustNM" type="button" style="width:99%" class="btn btn-info" data-toggle="modal" onclick="return chkCustInfoOpen(this);"><i class="fa fa-search"></i> 客戶名稱查詢</button>
+            </div>
+            <div class="row"></div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon"><span style="color:red; display:none;" CLTCTYPE="P">＊</span>生日</span>
+                <input id="iptCTLBirthday" type="text" class="date form_selDate" isTWYear="Y" maxYear="-1" minYear="-100" maxlength="8" CLTCTYPE="P" required>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 input-group">
+                <span class="input-group-addon"><span style="color:red; display:none;" CLTCTYPE="P">＊</span>性別</span>
+                <select id="selCTLSex" class="form-control" CLTCTYPE="P" required></select>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 input-group">
+                <span class="input-group-addon"><span style="color:red; display:none;" CLTCTYPE="P"></span>婚姻</span>
+                <select id="selCTLMarriage" class="form-control" CLTCTYPE="P"></select>
+            </div>
+            <div class="col-lg-3 input-group">
+                <span class="input-group-addon"><span style="color:red; display:none;" CLTCTYPE="C">＊</span>代表人(公司負責人)</span>
+                <input id="iptCTLRepresentative" type="text" class="form-control upperCase hftofl" maxlength="50" CLTCTYPE="C" required>
+            </div>
+            <div class="row"></div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">公司電話</span>
+                <input id="iptCTLOfficeTel" type="tel" class="form-control upperCase tel" maxlength="16">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">家用電話</span>
+                <input id="iptCTLHomeTel" type="tel" class="form-control upperCase tel" maxlength="16" CLTCTYPE="P">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">手機號碼</span>
+                <input id="iptCTLCellPhone" type="tel" class="form-control upperCase tel" maxlength="16">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">傳真號碼</span>
+                <input id="iptCTLFax" type="tel" class="form-control upperCase tel" maxlength="16">
+            </div>
+            <div class="col-lg-6 col-xs-12 input-group">
+                <span class="input-group-addon">E-Mail</span>
+                <input id="iptCTLEmail" type="text" class="form-control" maxlength="60">
+            </div>
+            <div class="row"></div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">地址</span>
+                <select id="selCTLADD1" add2="selCTLADD2" addo="iptCTLADDO" class="form-control"></select>
+                <span class="input-group-addon input-group-narrow"></span>
+                <select id="selCTLADD2" add1="selCTLADD1" addo="iptCTLADDO" addp="iptCTLADDPot" class="form-control"></select>
+                <span class="input-group-addon input-group-narrow"></span>
+            </div>
+            <div class="col-lg-12 col-xs-12 input-group">
+                <span class="input-group-addon" style="padding: 0px; font-size: 0px; border: 0; display: table-cell;">
+                    <input id="iptCTLADDPot" add1="selCTLADD1" add2="selCTLADD2" addo="iptCTLADDO" type="tel" class="form-control upperCase tel" style="width:50px;" maxlength="3">
+                </span>
+                <input id="iptCTLADDO" type="text" class="form-control hftofl upperCase" maxlength="118">
+            </div>
+            <!--==[要保人資料]===================================================================-->
+            <div class="row"></div>
+            <label style="color:#3a87ad; margin-bottom:0px;">要保人資料</label>&nbsp;&nbsp;
+            <input id="chkISAPL" type="checkbox" class="label_cbx">
+            <label for="chkISAPL" style="color:blue; margin-bottom:0px;">同被保險人</label>
+            <div class="row"></div>
+            <div id="divAPLData">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+                    <span class="input-group-addon">客戶代碼</span>
+                    <input id="iptAPL_CLNTNUM" type="text" class="form-control" disabled>
+                    <span class="input-group-btn" style="display:none;">
+                        <button id="btnUnAPLCustID" class="btn btn-default" type="button" title="解鎖"><i class="fa fa-unlock"></i></button>
+                    </span>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                    <span class="input-group-addon"><span style="color:red;">＊</span>客戶類別</span>
+                    <div class="input-group-addon" style="width:0%; background-color:white;border: 1px solid #cccccc;height:34px;">
+                        <label style="font-weight:normal; margin-bottom:0px;"><input id="rdoAPLCustType" name="rdoAPLCustType" value="P" type="radio" class="label_cbx" openinput="APLCTYPE" />自然人</label>
+                        <label style="font-weight:normal; margin-bottom:0px;"><input id="rdoAPLCustType" name="rdoAPLCustType" value="C" type="radio" class="label_cbx" openinput="APLCTYPE" />法人</label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                    <span class="input-group-addon"><span style="color:red;">＊</span>國別</span>
+                    <select id="selAPLNation" class="form-control" required APLCTYPE="P"></select>
+                </div>
+                <div class="col-lg-4 col-md-10 col-sm-12 col-xs-12 input-group">
+                    <span class="input-group-addon"><span style="color:red;">＊</span>要保人ID/公司統編</span>
+                    <input id="iptAPLCustID" type="text" class="form-control upperCase" data-toupper="Y" required maxlength="10">
+                </div>
+                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 input-group">
+                    <button id="btnAPLCustID" type="button" style="width:99%" class="btn btn-info" data-toggle="modal" onclick="return chkCustInfoOpen(this);"><i class="fa fa-search"></i> 已投保客戶查詢</button>
+                </div>
+                <div class="row"></div>
+                <div class="col-lg-6 col-md-10 col-sm-12 col-xs-12 input-group">
+                    <span class="input-group-addon"><span style="color:red;">＊</span>姓名/公司名稱</span>
+                    <input id="iptAPLName" type="text" class="form-control upperCase hftofl" required maxlength="50">
+                </div>
+                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 input-group">
+                    <button id="btnAPLCustNM" type="button" style="width:99%" class="btn btn-info " data-toggle="modal" onclick="return chkCustInfoOpen(this);"><i class="fa fa-search"></i> 客戶名稱查詢</button>
+                </div>
+                <div class="row"></div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                    <span class="input-group-addon"><span style="color:red; display:none;" APLCTYPE="P">＊</span>生日</span>
+                    <input id="iptAPLBirthday" type="text" class="form-control form_selDate" isTWYear="Y" maxYear="-1" minYear="-100" APLCTYPE="P" required>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 input-group">
+                    <span class="input-group-addon"><span style="color:red; display:none;" APLCTYPE="P">＊</span>性別</span>
+                    <select id="selAPLSex" class="form-control" APLCTYPE="P" required></select>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 input-group">
+                    <span class="input-group-addon"><span style="color:red; display:none;" APLCTYPE="P"></span>婚姻</span>
+                    <select id="selAPLMarriage" class="form-control" APLCTYPE="P"></select>
+                </div>
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 input-group">
+                    <span class="input-group-addon"><span style="color:red; display:none;" APLCTYPE="C">＊</span>代表人(公司負責人)</span>
+                    <input id="iptAPLRepresentative" type="text" class="form-control upperCase hftofl" maxlength="50" APLCTYPE="C" required>
+                </div>
+                <div class="row"></div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                    <span class="input-group-addon">公司電話</span>
+                    <input id="iptAPLOfficeTel" type="tel" class="form-control upperCase tel" maxlength="16">
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                    <span class="input-group-addon">家用電話</span>
+                    <input id="iptAPLHomeTel" type="tel" class="form-control upperCase tel" maxlength="16" APLCTYPE="P">
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                    <span class="input-group-addon">手機號碼</span>
+                    <input id="iptAPLCellPhone" type="tel" class="form-control upperCase tel" maxlength="16">
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                    <span class="input-group-addon">傳真號碼</span>
+                    <input id="iptAPLFax" type="tel" class="form-control upperCase tel" maxlength="16">
+                </div>
+                <div class="col-lg-6 col-xs-12 input-group">
+                    <span class="input-group-addon">E-Mail</span>
+                    <input id="iptAPLEmail" type="text" class="form-control" maxlength="60">
+                </div>
+                <div class="row"></div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 input-group">
+                    <span class="input-group-addon">地址</span>
+                    <select id="selAPLADD1" add2="selAPLADD2" addo="iptAPLADDO" class="form-control"></select>
+                    <span class="input-group-addon input-group-narrow"></span>
+                    <select id="selAPLADD2" add1="selAPLADD1" addo="iptAPLADDO" addp="iptAPLADDPot" class="form-control"></select>
+                    <span class="input-group-addon input-group-narrow"></span>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 input-group">
+                    <span class="input-group-addon" style="padding: 0px; font-size: 0px; border: 0; display: table-cell;">
+                        <input id="iptAPLADDPot" add1="selAPLADD1" add2="selAPLADD2" addo="iptAPLADDO" type="tel" class="form-control upperCase tel" style="width:50px;" maxlength="3">
+                    </span>
+                    <input id="iptAPLADDO" type="text" class="form-control upperCase hftofl" maxlength="118">
+                </div>
+                <div class="col-lg-6 input-group">
+                    <span class="input-group-addon"><span style="color:red;">＊</span>與被保險人關係</span>
+                    <select id="selRELA" class="form-control" required></select>
+                </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group" style="display:none;">
+                <button type="button" id="btnNext2" class="btn btn-primary" style="width:100%;"><i class="fa fa-arrow-down"></i> 下一步</button>
+            </div>
+            <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group" style="display:none;">
+                <button type="button" id="btnEdit2" class="btn btn-success" style="width:100%;"><i class="fa fa-unlock"></i> 編輯</button>
+            </div>
+        </div>
+    </div>
+    <!--==[車籍資料]===============================================================================-->
+    <div class="panel panel-info">
+        <div class="panel-heading data">
+            車籍資料
+        </div>
+        <div id="divCarInfo" class="panel-body" style="">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon"><span style="color:red;">＊</span>廠型</span>
+                <select class="form-control selectpicker show-menu-arrow oldval"
+                        data-header="請輸入至少2個關鍵字"
+                        data-source="ajax"
+                        liveSearchStyle="contains"
+                        showContent="true"
+                        data-live-search="true"
+                        id="selZMAKE"
+                        name="selZMAKE"
+                        required></select>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">強制車種</span>
+                <select class="form-control oldval" id="selMANMVPZMTYPE"></select>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">任意車種</span>
+                <select class="form-control oldval" id="selMVPZMTYPE"></select>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon"><span style="color:red;">＊</span>製造年月</span>
+                <select id="selYRMANF" class="form_selDateYear form-control" required maxYear="1" minYear="-35"></select>
+                <span class="input-group-narrow"></span>
+                <select id="selMNMANF" class="form_selDateMonth form-control" required></select>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">重置價格</span>
+                <input id="iptRESETPRICE" type="tel" class="form-control comma oldval upperCase" maxlength="10">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon"><span style="color:red;">＊</span>原始發照年月</span>
+                <select id="selIssueYear" class="form_selDateYear form-control" required maxYear="1" minYear="-35" isTWYear="Y"></select>
+                <span class="input-group-narrow"></span>
+                <select id="selIssueMonth" class="form_selDateMonth form-control" required></select>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon"><span style="color:red;">＊</span>排氣量</span>
+                <input id="iptZCC" type="tel" class="form-control num oldval upperCase" maxlength="5" required>
+                <span class="input-group-addon">(立方公分/馬力)</span>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon"><span style="color:red;">＊</span>乘載</span>
+                <input id="iptZCARRY" type="tel" class="form-control num oldval upperCase" maxlength="5" required>
+                <span class="input-group-addon">(人/噸)</span>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">牌照</span>
+                <input id="iptZREGNUM" type="text" class="form-control upperCase" maxlength="8">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">引擎/車身編號</span>
+                <input id="iptEngineNo" type="text" class="form-control upperCase" maxlength="20">
+            </div>
+            <div class="row"></div>
+            <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group" style="display:none;">
+                <button type="button" id="btnNext3" class="btn btn-primary" style="width:100%"><i class="fa fa-arrow-down"></i> 下一步</button>
+            </div>
+            <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group" style="display:none;">
+                <button type="button" id="btnEdit3" class="btn btn-success" style="width:100%;"><i class="fa fa-unlock"></i> 編輯</button>
+            </div>
+        </div>
+    </div>
+    <!--==[投保險種資料]===========================================================================-->
+    <div class="panel panel-info">
+        <div class="panel-heading data">
+            投保險種資料
+        </div>
+        <div id="divInsInfo" class="panel-body" style="">
+            <label style="color:#3a87ad; margin-bottom:0px;">
+                強制險資料
+                <input id="chkMan" type="checkbox" class="label_cbx">
+            </label>
+            <label id="labManGetLevelMsg" style="color:red"></label>
+            <div class="panel-info">
+                <div id="divManData" class="panel-body" style="padding-left:0px;">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">保險期間</span>
+                        <div class="input-group-addon" style="width:0%; background-color:white;border: 1px solid #cccccc;height:34px;">
+                            <label style="font-weight:normal; margin-bottom:0px;"><input id="chkFRDATE1" value="1" type="checkbox" class="label_cbx" />一年期</label>
+                            <label style="font-weight:normal; margin-bottom:0px;"><input id="chkFRDATE2" value="2" type="checkbox" class="label_cbx" />二年期</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon"><span style="color:red;">＊</span>保期(起)</span>
+                        <input id="iptFRDATES" type="text" class="form_selDate form-control oldval" maxYear="1" minYear="-1" required />
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon"><span style="color:red;">＊</span>保期(迄)</span>
+                        <input id="iptFRDATEE" type="text" class="form_selDate form-control oldval" maxYear="3" minYear="-1" required />
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 input-group">
+                        <span class="input-group-addon"><span style="color:red;">＊</span>強制等級</span>
+                        <select id="selMANLEVEL" class="form-control" required></select>
+                    </div>
+                    <select id="selBONUS" class="form-control" style="display:none;"></select>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 input-group">
+                        <span class="input-group-addon"><span style="color:red;">＊</span>酒次</span>
+                        <input id="iptDrunkFreq" type="tel" class="form-control num upperCase" required maxlength="2" />
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">酒駕金額</span>
+                        <input id="iptDrunkAmt" type="tel" class="form-control comma upperCase" maxlength="16">
+                        <span class="input-group-addon">元</span>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">優惠</span>
+                        <input id="iptSPECIAL" type="tel" class="form-control comma upperCase" maxlength="6">
+                        <span class="input-group-addon">元</span>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">獎金</span>
+                        <input id="iptBONUS" type="text" class="form-control" disabled maxlength="50" />
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">保費</span>
+                        <input id="iptMANZPREM" type="text" class="form-control comma upperCase" disabled maxlength="7" />
+                        <span class="input-group-addon">元</span>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">強制序號</span>
+                        <input id="iptForceSerialNo" type="text" class="form-control upperCase" disabled maxlength="16">
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 input-group" style="font-weight:bold; color:blue;">
+                        <input id="chkEmail" type="checkbox" class="label_cbx" disabled /><label for="chkEmail">電子式保險證(※如勾選電子式則不另寄紙本)</label>
+                    </div>
+                </div>
+            </div>
+            <!--==[任意險資料]===========================================================================-->
+            <div class="row panel"></div>
+            <label style="color:#3a87ad; margin-bottom:0px;">
+                任意險資料
+                <input id="chkAny" type="checkbox" class="label_cbx">
+            </label>
+            <label id="labAnyGetLevelMsg" style="color:red"></label>
+            <div class="panel-info">
+                <div id="divAnyData" class="panel-body" style="padding-left:0px;">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">保險期間</span>
+                        <div class="input-group-addon" style="width:0%; background-color:white;border: 1px solid #cccccc;height:34px;">
+                            <label style="font-weight:normal; margin-bottom:0px;"><input id="chkCCDATE" name="chkCCDATE" value="Y" type="checkbox" class="label_cbx" />同強制險</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon"><span style="color:red;">＊</span>保期(起)</span>
+                        <input id="iptCCDATES" type="text" class="form_selDate form-control oldval" maxYear="1" minYear="-1" required />
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon"><span style="color:red;">＊</span>保期(迄)</span>
+                        <input id="iptCCDATEE" type="text" class="form_selDate form-control oldval" maxYear="3" minYear="-1" required />
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+                        <span class="input-group-addon">佣金</span>
+                        <select class="form-control" id="selAnyBonusCode"></select>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 input-group">
+                        <span class="input-group-addon">體係</span>
+                        <select class="form-control oldval" id="selBodyFactor"></select>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 input-group">
+                        <span class="input-group-addon">責係</span>
+                        <select class="form-control oldval" id="selDutyFactor"></select>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">任意序號</span>
+                        <input id="iptAnySerialNo" type="text" class="form-control upperCase" disabled>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">計算</span>
+                        <select class="form-control" id="selCalCode" required disabled></select>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">折舊率</span>
+                        <select id="selDepRate" class="form-control oldval"></select>
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">付款方式</span>
+                        <select class="form-control" id="selPAYWAY" required></select>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">活動代碼</span>
+                        <select class="form-control" id="selProgramCode"></select>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">專案代號</span>
+                        <input id="iptProjectNo" type="text" class="form-control upperCase" maxlength="8">
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">活動方案</span>
+                        <select class="form-control" id="selZCAMPAN"></select>
+                        <span class="input-group-btn"><button id="btnSetUserPro" class="btn btn-default" type="button" title="我的最愛"><i class="fa fa-heart"></i></button></span>
+                        @*<span class="input-group-btn"><button id="btnAddUserPro" class="btn btn-default" type="button" title="新增自訂方案"><i class="fa fa-plus"></i></button></span>*@
+                    </div>
+                    <div id="divSetUserPro" style="display:none;" class="panel-body">
+                        <div class="row"></div>
+                        <label style="color:#3a87ad; margin-bottom:0px;">自訂活動方案(依照目前[承保內容]，儲存自訂方案) <i class="fa fa-question-circle" id="openHple" onclick="openHple_SetUserPro(this);">或按此檢視說明</i></label>
+                        @*<div class="row"></div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <input id="iptProgramName1" type="text" maxlength="60" class="form-control  upperCase hftofl">
+                                <span class="input-group-btn"><button id="btnSavePro1" class="btn btn-default" type="button" title="依照目前[承保內容]，儲存至方案" onclick="savePro('1');"><i class="fa fa-floppy-o"></i></button></span>
+                                <span class="input-group-btn" style="display:none;"><button id="btnDelPro1" class="btn btn-default" type="button" title="刪除方案" onclick="delPro('1');"><i class="fa fa-times"></i></button></span>
+                            </div>
+                            <div class="row"></div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <input id="iptProgramName2" type="text" maxlength="60" class="form-control  upperCase hftofl">
+                                <span class="input-group-btn"><button id="btnSavePro2" class="btn btn-default" type="button" title="依照目前[承保內容]，儲存至方案" onclick="savePro('2');"><i class="fa fa-floppy-o"></i></button></span>
+                                <span class="input-group-btn" style="display:none;"><button id="btnDelPro2" class="btn btn-default" type="button" title="刪除方案" onclick="delPro('2');"><i class="fa fa-times"></i></button></span>
+                            </div>
+                            <div class="row"></div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <input id="iptProgramName3" type="text" maxlength="60" class="form-control  upperCase hftofl">
+                                <span class="input-group-btn"><button id="btnSavePro3" class="btn btn-default" type="button" title="依照目前[承保內容]，儲存至方案" onclick="savePro('3');"><i class="fa fa-floppy-o"></i></button></span>
+                                <span class="input-group-btn" style="display:none;"><button id="btnDelPro3" class="btn btn-default" type="button" title="刪除方案" onclick="delPro('3');"><i class="fa fa-times"></i></button></span>
+                            </div>
+                            <div class="row"></div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <input id="iptProgramName4" type="text" maxlength="60" class="form-control  upperCase hftofl">
+                                <span class="input-group-btn"><button id="btnSavePro4" class="btn btn-default" type="button" title="依照目前[承保內容]，儲存至方案" onclick="savePro('4');"><i class="fa fa-floppy-o"></i></button></span>
+                                <span class="input-group-btn" style="display:none;"><button id="btnDelPro4" class="btn btn-default" type="button" title="刪除方案" onclick="delPro('4');"><i class="fa fa-times"></i></button></span>
+                            </div>
+                            <div class="row"></div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <input id="iptProgramName5" type="text" maxlength="60" class="form-control  upperCase hftofl">
+                                <span class="input-group-btn"><button id="btnSavePro5" class="btn btn-default" type="button" title="依照目前[承保內容]，儲存至方案" onclick="savePro('5');"><i class="fa fa-floppy-o"></i></button></span>
+                                <span class="input-group-btn" style="display:none;"><button id="btnDelPro5" class="btn btn-default" type="button" title="刪除方案" onclick="delPro('5');"><i class="fa fa-times"></i></button></span>
+                            </div>
+                            <div class="row"></div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <input id="iptProgramName6" type="text" maxlength="60" class="form-control  upperCase hftofl">
+                                <span class="input-group-btn"><button id="btnSavePro6" class="btn btn-default" type="button" title="依照目前[承保內容]，儲存至方案" onclick="savePro('6');"><i class="fa fa-floppy-o"></i></button></span>
+                                <span class="input-group-btn" style="display:none;"><button id="btnDelPro6" class="btn btn-default" type="button" title="刪除方案" onclick="delPro('6');"><i class="fa fa-times"></i></button></span>
+                            </div>
+                            <div class="row"></div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <input id="iptProgramName7" type="text" maxlength="60" class="form-control  upperCase hftofl">
+                                <span class="input-group-btn"><button id="btnSavePro7" class="btn btn-default" type="button" title="依照目前[承保內容]，儲存至方案" onclick="savePro('7');"><i class="fa fa-floppy-o"></i></button></span>
+                                <span class="input-group-btn" style="display:none;"><button id="btnDelPro7" class="btn btn-default" type="button" title="刪除方案" onclick="delPro('7');"><i class="fa fa-times"></i></button></span>
+                            </div>
+                            <div class="row"></div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <input id="iptProgramName8" type="text" maxlength="60" class="form-control  upperCase hftofl">
+                                <span class="input-group-btn"><button id="btnSavePro8" class="btn btn-default" type="button" title="依照目前[承保內容]，儲存至方案" onclick="savePro('8');"><i class="fa fa-floppy-o"></i></button></span>
+                                <span class="input-group-btn" style="display:none;"><button id="btnDelPro8" class="btn btn-default" type="button" title="刪除方案" onclick="delPro('8');"><i class="fa fa-times"></i></button></span>
+                            </div>
+                            <div class="row"></div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <input id="iptProgramName9" type="text" maxlength="60" class="form-control  upperCase hftofl">
+                                <span class="input-group-btn"><button id="btnSavePro9" class="btn btn-default" type="button" title="依照目前[承保內容]，儲存至方案" onclick="savePro('9');"><i class="fa fa-floppy-o"></i></button></span>
+                                <span class="input-group-btn" style="display:none;"><button id="btnDelPro9" class="btn btn-default" type="button" title="刪除方案" onclick="delPro('9');"><i class="fa fa-times"></i></button></span>
+                            </div>
+                            <div class="row"></div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <input id="iptProgramName10" type="text" maxlength="60" class="form-control  upperCase hftofl">
+                                <span class="input-group-btn"><button id="btnSavePro10" class="btn btn-default" type="button" title="依照目前[承保內容]，儲存至方案" onclick="savePro('10');"><i class="fa fa-floppy-o"></i></button></span>
+                                <span class="input-group-btn" style="display:none;"><button id="btnDelPro10" class="btn btn-default" type="button" title="刪除方案" onclick="delPro('10');"><i class="fa fa-times"></i></button></span>
+                            </div>*@
+                        <div id="TextBoxesGroup" class="panel-body"></div>
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                        <button type="button" style="width:100%" class="btn btn-info" id="btnInsNew"><i class="fa fa-plus"></i> 投保險種</button>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                        <button type="button" style="width:100%" class="btn btn-info" id="btnDelInsAny"><i class="fa fa-times"></i> 清除任意承保險種</button>
+                    </div>
+                    <div id="divInsured" style="display:none;" class="panel-body">
+                        <div class="row"></div>
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 input-group">
+                            <span class="input-group-addon">險種</span>
+                            <select class="form-control" id="selZCVRTYPE"></select>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon">保額一</span>
+                            <select class="form-control" id="selSUMINA" dir="rtl"></select>
+                            <input id="iptSUMINA" type="text" class="form-control num upperCase" maxlength="9" style="display:none;">
+                            <span class="input-group-addon">元</span>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon">保額二</span>
+                            <select class="form-control" id="selSUMINB" dir="rtl"></select>
+                            <span class="input-group-addon">元/天數</span>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon">保額三</span>
+                            <select class="form-control" id="selSUMINC" dir="rtl"></select>
+                            <input id="iptSUMINC" type="text" class="form-control num upperCase" maxlength="9" style="display:none;">
+                            <span class="input-group-addon">元</span>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon">係數一</span>
+                            <select class="form-control" id="selZFACTORA"></select>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon">係數二</span>
+                            <select class="form-control" id="selZFACTORB"></select>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon">自負額</span>
+                            <select class="form-control" id="selEXCESS"></select>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                            <button type="button" style="width:100%; display:none;" class="btn btn-primary" id="btnInsAdd"><i class="fa fa-floppy-o"></i> 確定新增</button>
+                            <button type="button" style="width:100%; display:none;" class="btn btn-primary" id="btnInsUpd"><i class="fa fa-floppy-o"></i> 確定儲存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--==[承保內容]===========================================================================-->
+            <label id="labInsuranceMsg" style="color:red; margin-bottom:0px;"></label>
+            <div class="row panel"></div>
+            <label style="color:#3a87ad; margin-bottom:0px;">
+                承保內容
+            </label>
+            <div id="divInsuredInfo" class="panel-body" style="padding-left:0px;">
+                <table id="tblInsuranceList" style="width:100%; margin-top:5px" class="display table table-striped table-bordered table-hover dt-responsive">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th colspan="2" class="text-center"> 險種 </th>
+                            <th class="text-center" style="white-space: nowrap;"> 保額一 </th>
+                            <th class="text-center" style="white-space: nowrap;"> 保額二 </th>
+                            <th class="text-center" style="white-space: nowrap;"> 保額三 </th>
+                            <th class="text-center" style="white-space: nowrap;"> 自負額 </th>
+                            <th class="text-center" style="white-space: nowrap;"> 保險費 </th>
+                            <th class="text-center" style="white-space: nowrap;"> 月繳保費 </th>
+                            <th class="text-center" style="white-space: nowrap;"> 係數一 </th>
+                            <th class="text-center" style="white-space: nowrap;"> 係數二 </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+                <label id="labDraggingMsg" style="color:red; margin-bottom:0px;"></label>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 input-group">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 input-group">
+                        <span class="input-group-addon">總保費 NT</span>
+                        <input id="iptTotalInsurance" type="text" class="form-control comma upperCase" maxlength="16" disabled>
+                        <span class="input-group-addon">元</span>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 col-lg-offset-5 col-md-offset-0 input-group">
+                        <button type="button" style="width:100%;" class="btn btn-primary" id="btnCalPre"><i class="fa fa-calculator"></i> 計算保費</button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 input-group">
+                        <button type="button" style="width:100%;" class="btn btn-info" id="btnPreview"><i class="fa"></i> 預覽</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group" style="display:none;">
+                <button type="button" id="btnNext4" class="btn btn-primary" style="width:100%"><i class="fa fa-arrow-down"></i> 下一步</button>
+            </div>
+            <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group" style="display:none;">
+                <button type="button" id="btnEdit4" class="btn btn-success" style="width:100%;"><i class="fa fa-unlock"></i> 編輯</button>
+            </div>
+        </div>
+    </div>
+    <!--==[其他約定事項]===========================================================================-->
+    <div class="panel panel-info">
+        <div class="panel-heading data">
+            其他約定事項
+        </div>
+        <div id="divOtherData" class="panel-body" style="">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">附加被保險人</span>
+                <input id="iptAddIns" type="text" class="form-control upperCase hftofl" maxlength="47">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 input-group">
+                <span class="input-group-addon">抵押權人</span>
+                <input id="iptMortgage" type="text" class="form-control upperCase hftofl" maxlength="47">
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+                <span class="input-group-addon">約定駕駛人</span>
+                <input id="iptAGRDRI01" type="text" class="form-control upperCase hftofl" maxlength="10">
+            </div>
+            <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+                <input id="iptAGRDRI02" type="text" class="form-control upperCase hftofl" maxlength="10">
+            </div>
+            <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+                <input id="iptAGRDRI03" type="text" class="form-control upperCase hftofl" maxlength="10">
+            </div>
+            <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+                <input id="iptAGRDRI04" type="text" class="form-control upperCase hftofl" maxlength="10">
+            </div>
+            <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+                <input id="iptAGRDRI05" type="text" class="form-control upperCase hftofl" maxlength="10">
+            </div>
+            <div class="row"></div>
+            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 input-group">
+                <span class="input-group-addon">記錄</span>
+                <textarea id="txtRecords" rows="3" class="form-control hftofl" maxlength="500"></textarea>
+            </div>
+            <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group">
+                <button id="btnOpenUploadDiv" type="button" style="width:99%" class="btn btn-info" data-toggle="modal" onclick="return;"><i class="fa fa-folder-o"></i> 附件上傳</button>
+                <span id="uploadFileCount"></span>
+            </div>
+            <label id="labUploadMsg" style="color:blue; margin-bottom:0px;"></label>
+            <div class="row"></div>
+            <label style="color:#3a87ad; margin-bottom:0px;">
+                傷害險名冊
+                <input id="chkBen" type="checkbox" class="label_cbx" disabled>
+            </label>
+            <label style="color:#3a87ad; margin-bottom:0px;">
+                新頁
+                <input id="chkNewPageBen" type="checkbox" class="label_cbx" disabled>
+            </label>
+            <label id="labBenDataMsg" style="color:red"></label>
+            <div class="panel-info" id="panBenData">
+                <div class="panel-body" id="divBenData" style="padding-left:0px;">
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                        <button type="button" style="width:100%" class="btn btn-info" id="btnBenNew"><i class="fa fa-user-plus"></i> 新增傷害險被保險人名冊</button>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                        <button type="button" style="width:100%" class="btn btn-info" id="btnUpload"><i class="fa fa-upload"></i> 上傳傷害險被保險人名冊</button>
+                    </div>
+                    <div class="row"></div>
+                    <div id="divBenInputData" style="display:none;" class="panel-body">
+                        <div class="col-lg-6 input-group">
+                            <span class="input-group-addon"><span style="color:red;">＊</span>險種</span>
+                            <select id="selBenZCVRTYPE" class="form-control" required></select>
+                        </div>
+                        <div class="row"></div>
+                        <label style="color:#3a87ad; margin-bottom:0px;">列名駕駛人</label>&nbsp;&nbsp;
+                        <input id="chkIdenMEM" type="checkbox" class="label_cbx">
+                        <label for="chkIdenMEM" style="color:blue; margin-bottom:0px;">同被保險人</label>
+                        <div class="row"></div>
+                        <div class="panel-info">
+                            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 input-group">
+                                <span class="input-group-addon"><span style="color:red;">＊</span>姓名</span>
+                                <input id="iptDriZCNAME" type="text" class="form-control upperCase hftofl" maxlength="50" required>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <span class="input-group-addon"><span style="color:red;">＊</span>ID</span>
+                                <input id="iptDriMEMBSEL" type="text" class="form-control upperCase" maxlength="10" required>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 input-group">
+                                <span class="input-group-addon"><span style="color:red;">＊</span>與要保人關係</span>
+                                <select id="selDriRELA" class="form-control" required></select>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <span class="input-group-addon"><span style="color:red;">＊</span>生日</span>
+                                <input id="iptDriCLTDOB" type="text" class="form-control form_selDate"
+                                       isTWYear="Y" maxYear="-1" minYear="-100" required>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <span class="input-group-addon"><span style="color:red;">＊</span>性別</span>
+                                <select class="form-control" id="selDriCLTSEX" required></select>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <span class="input-group-addon">聯絡電話</span>
+                                <input id="iptDriTEL" type="tel" class="form-control upperCase tel" maxlength="16">
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <label style="color:#3a87ad; margin-bottom:0px;">受益人</label>
+                        <div class="row"></div>
+                        <div class="panel-info">
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <span class="input-group-addon"><span style="color:red;">＊</span>法定</span>
+                                <select id="selBenLEGAL" class="form-control" required>
+                                    <option value="Y" selected>Y</option>
+                                    <option value="N">N</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <span class="input-group-addon"><span style="color:red;" related="Y">＊</span>受益人姓名</span>
+                                <input id="iptBenNAME" type="text" class="form-control upperCase hftofl" maxlength="12" required>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <span class="input-group-addon"><span style="color:red;" related="Y">＊</span>與列名駕駛人的關係</span>
+                                <select id="selBenRELA" class="form-control" required></select>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <span class="input-group-addon">受益人電話</span>
+                                <input id="iptBenTEL" type="tel" class="form-control upperCase tel" maxlength="11">
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <span class="input-group-addon">地址</span>
+                                <select id="selBenADD1" class="form-control"></select>
+                                <span class="input-group-addon input-group-narrow"></span>
+                                <select id="selBenADD2" class="form-control"></select>
+                                <span class="input-group-addon input-group-narrow"></span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 input-group">
+                                <input id="iptBenADDO" type="text" class="form-control hftofl upperCase" maxlength="118">
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                            <button type="button" style="width:100%; display:none;" class="btn btn-primary" id="btnBenAdd"><i class="fa fa-floppy-o"></i> 確定新增</button>
+                            <button type="button" style="width:100%; display:none;" class="btn btn-primary" id="btnBenAlt"><i class="fa fa-floppy-o"></i> 確定儲存</button>
+                        </div>
+                    </div>
+                    <div class="row"></div>
+                    <div id="divBenUploadData" style="display:none;" class="panel-body">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                            <input type="file" id="File1" name="File1" style="display: none" accept=".xlsx">
+                            <input type="text" class="form-control" id="FakeFile1" style="width:auto" readonly>
+                            <span class="input-group-btn">
+                                <button class="btn btn-info" type="button" id="FakeBrowseFile1"><i class="fa fa-search"></i>瀏覽檔案...</button>
+                            </span>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                            <button type="button" class="btn btn-info" id="upload" style="width:100%"><i class="fa fa-upload"></i>上傳檔案</button>
+                        </div>
+                        @*<div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                                <button type="button" class="btn btn-info" id="download" style="width:100%"><i class="fa fa-download"></i>下載空白表單</button>
+                            </div>*@
+                    </div>
+
+                    <div class="row"></div>
+                    <div class="panel-body" style="padding-left:0px; padding-right:5px;">
+                        <table id="tblBeneList" style="width:100%;" class="display table table-striped table-bordered table-hover dt-responsive ">
+                            <!--nowrap-->
+                            <thead>
+                                <tr>
+                                    <th>　</th>
+                                    <th>　</th>
+                                    <th class="text-center" style="white-space: nowrap;"> 險種 </th>
+                                    <th class="text-center" style="white-space: nowrap;"> 姓名 </th>
+                                    <th class="text-center" style="white-space: nowrap;"> 與要保人關係 </th>
+                                    <th class="text-center" style="white-space: nowrap;"> ID </th>
+                                    <th class="text-center" style="white-space: nowrap;"> 生日 </th>
+                                    <th class="text-center" style="white-space: nowrap;"> 性別</th>
+                                    <th class="text-center" style="white-space: nowrap;"> 聯絡電話 </th>
+                                    <th class="text-center" style="white-space: nowrap;"> 法定 </th>
+                                    <th class="text-center" style="white-space: nowrap;"> 受益人 </th>
+                                    <th class="text-center" style="white-space: nowrap;"> 關係 </th>
+                                    <th class="text-center" style="white-space: nowrap;"> 受益人電話 </th>
+                                    <th class="text-center" style="white-space: nowrap;"> 地址 </th>
+                                    <th> ADD1 </th>
+                                    <th> ADD2 </th>
+                                    <th> 與要保人關係code </th>
+                                    <th> 性別code </th>
+                                    <th> 關係code </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row"></div>
+            <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group" style="display:none;">
+                <button type="button" id="btnNext5" class="btn btn-primary" style="width:100%;"><i class="fa fa-arrow-down"></i> 下一步</button>
+            </div>
+            <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group" style="display:none;">
+                <button type="button" id="btnEdit5" class="btn btn-success" style="width:100%;"><i class="fa fa-unlock"></i> 編輯</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body" style="padding-left:5px;">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 col-lg-offset-2 input-group">
+            <button type="button" style="width:100%" class="btn btn-primary" id="btnStorCache"><i class="fa fa-floppy-o"></i> 暫存</button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 input-group">
+            <button type="button" style="width:100%" class="btn btn-primary" id="btnSubmit"><i class="fa fa-paper-plane"></i> 確定</button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 input-group">
+            <button type="button" style="width:100%" class="btn btn-default" id="btnClose">清除</button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 col-lg-offset-4 input-group" style="display:none;">
+            <button type="button" style="width:100%" class="btn btn-default" id="btnBack" onclick="history.back()">返回</button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 col-lg-offset-4 input-group" style="display:none;">
+            <button type="button" style="width:100%" class="btn btn-default" id="btnMobileInsure" onclick="">檢視完成</button>
+        </div>
+    </div>
+</div>
+
+@*視窗_[客戶資料]*@
+<div class="modal fade" id="divCustInfo" tabindex="-1" role="dialog" aria-labelledby="h4Money" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="btndivCustClose">&times;</button>
+                <h4 class="modal-title" id="h4Money">客戶資料</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel" style="border-left-width: 0px;">
+                    <table id="tblCustInfo" style="width:100%;display:none;" class="display table table-striped table-bordered table-hover dt-responsive ">
+                        <thead>
+                            <tr>
+                                <th class="text-center"> 選取 </th>
+                                <th class="text-center" style="white-space: nowrap;"> 客戶名稱 </th>
+                                <th class="text-center" style="white-space: nowrap;"> 出生年月日 </th>
+                                <th class="text-center" style="white-space: nowrap;"> 身分證字號 </th>
+                                <th class="text-center" style="white-space: nowrap;"> 聯絡電話 </th>
+                                <th class="text-center" style="white-space: nowrap;"> 聯絡地址 </th>
+                                <th class="text-center" style="white-space: nowrap;"> 電子信箱 </th>
+                                <th class="text-center" style="white-space: nowrap;"> 身分別 </th>
+                                <th> 客戶別 </th>
+                                <th> 性別 </th>
+                                <th> 國家 </th>
+                                <th> 公司電話 </th>
+                                <th> 行動電話 </th>
+                                <th> 代表人 </th>
+                                <th> 郵遞區號 </th>
+                                <th> AS400客代 </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="panel-body" style="border-bottom-width: 0px; padding-bottom: 0px;">
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 col-lg-offset-5 input-group">
+                        <button type="submit" style="width:100%" class="btn btn-primary" id="btnCustReturn"><i class="fa fa-reply"></i> 確定帶入</button>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 input-group">
+                        <button type="button" style="width:100%" class="btn btn-default" id="btnCustClose" data-dismiss="modal"><i class="fa fa-sign-out"></i> 關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*視窗_[附件上傳]*@
+<div class="modal fade" id="divUploadFile" tabindex="-1" role="dialog" aria-labelledby="h4Money" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="btndivCustClose">&times;</button>
+                <h4 class="modal-title" id="h4Money">附件上傳</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-info">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <div class="panel-body" style="padding-left: 10px; padding-right:10px;">
+                            <div id="UploadFileDiv" class="row" style="padding-left:15px; padding-right:15px;"></div>
+                            <div id="divUploadOpt" class="row" style="padding-left:15px; padding-right:15px;">
+                                <div class="col-lg-offset-4 col-lg-1 col-md-4 col-sm-6 col-xs-12 input-group">
+                                    <img style="display:none; width:150px; height:100px" />
+                                    <label style="display:none;"></label>
+                                    <label style="width:100%" class="btn btn-primary">
+                                        瀏覽檔案...<input type="file" accept=".jpg,.pdf,.png" class="uploadFile" name="uploadFile" style="display:none;" />
+                                    </label>
+                                    <label class="fileItem"></label>
+                                    <a class="badge" style="display:none;"><i class="fa fa-times delFile" title="刪除檔案"></i></a>
+                                </div>
+                                <div class="col-lg-1 col-md-4 col-sm-6 col-xs-12 input-group">
+                                    <button type="button" style="width:100%" class="btn btn-default" id="btnUploadClear" onclick="$('#UploadFileDiv > div').remove();"><i class="fa fa-times" aria-hidden="true"></i> 清除檔案</button>
+                                </div>
+                                <div class="col-lg-1 col-md-4 col-sm-6 col-xs-12 input-group">
+                                    <button id="confirmUploadFile" type="button" style="width:100%" class="btn btn-primary"> 確定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <template id="UploadFileTemplate">
+        <div class="col-lg-offset-4 col-lg-1 col-md-4 col-sm-6 col-xs-12 input-group">
+            <img style="display:none; width:150px; height:100px" />
+            <label style="display:none;"></label>
+            <label style="width:100%" class="btn btn-primary">
+                瀏覽檔案...<input type="file" accept=".jpg,.pdf,.png" class="uploadFile" name="uploadFile" style="display:none;" />
+            </label>
+            <label class="fileItem"></label>
+            <a class="badge" style="display:none;"><i class="fa fa-times delFile" title="刪除檔案"></i></a>
+        </div>
+    </template>
+</div>
+
+@*承保內容*@
+<div class="modal fade" id="popuInsInfo" tabindex="-1" role="dialog" aria-labelledby="h4Money" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="btndivInsClose">&times;</button>
+                <h4 class="modal-title view-td-content">車險報價險種明細</h4>
+            </div>
+            <div class="panel-body" style="padding-bottom:0px;">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-4 td-title view-td-content" style="padding-left: 15px;padding-right: 10px;text-align: right;">被保險人姓名：</div>
+                        <div id="divCTLName" class="col-lg-8 col-md-6 col-sm-6 col-xs-8 view-td-content"></div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-4 td-title view-td-content" style="padding-left: 15px;padding-right: 10px;text-align: right;">生日：</div>
+                        <div id="divCTLBirthday" class="col-lg-8 col-md-6 col-sm-6 col-xs-8 view-td-content"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-4 td-title view-td-content" style="padding-left: 15px;padding-right: 10px;text-align: right;">要保人姓名：</div>
+                        <div id="divAPLName" class="col-lg-8 col-md-6 col-sm-6 col-xs-8 view-td-content"></div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-4 td-title view-td-content" style="padding-left: 15px;padding-right: 10px;text-align: right;">生日：</div>
+                        <div id="divAPLBirthday" class="col-lg-8 col-md-6 col-sm-6 col-xs-8 view-td-content"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-4 td-title view-td-content" style="padding-left: 15px;padding-right: 10px;text-align: right;">車牌：</div>
+                        <div id="divZREGNUM" class="col-lg-8 col-md-6 col-sm-6 col-xs-8 view-td-content" style="white-space:pre;"></div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-4 td-title view-td-content" style="padding-left: 15px;padding-right: 10px;text-align: right;">車種：</div>
+                        <div id="divZMTYPE" class="col-lg-8 col-md-6 col-sm-6 col-xs-8 view-td-content"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-4 td-title view-td-content" style="padding-left: 15px;padding-right: 10px;text-align: right;">廠型：</div>
+                        <div id="divZMAKE" class="col-lg-8 col-md-6 col-sm-6 col-xs-8 view-td-content" style="word-wrap: break-word;word-break: break-all;"></div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-4 td-title view-td-content" style="padding-left: 15px;padding-right: 10px;text-align: right;">保險期間：</div>
+                        <div id="divPeriod" class="col-lg-8 col-md-6 col-sm-6 col-xs-8 view-td-content" style="word-wrap: break-word;word-break: break-all;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-4 td-title view-td-content" style="padding-left: 15px;padding-right: 10px;text-align: right;">查詢序號：</div>
+                        <div class="col-lg-8 col-md-6 col-sm-6 col-xs-8 view-td-content" id="divSerialNo" style="word-wrap: break-word;word-break: break-all;"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="divInsList" class="panel-body" style="padding-top:0px; padding-bottom:0px;"></div>
+            <div class="panel-body" style="padding-top:0px;">
+                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 td-title view-td-content" style="padding-left: 15px;padding-right: 10px;text-align: right;">保費合計：</div>
+                <div class="col-lg-10 col-md-8 col-sm-8 col-xs-8 view-td-content" id="divTotalAmount"></div>
+                <div class="row"></div>
+                <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 td-title view-td-content" style="padding-left: 15px;padding-right: 10px;text-align: right;">備註說明：</div>
+                <div class="col-lg-10 col-md-8 col-sm-8 col-xs-8 view-td-content" style="word-wrap: break-word;word-break: break-all;">以上各項險種內容，請參閱正式保險單及條款</div>
+            </div>
+            <div class="panel-body" style="padding-top:0px; text-align:center; padding-left:5px;">
+                <div class="row"></div>
+                <div class="col-lg-offset-5 col-md-offset-4 col-sm-offset-4 col-lg-2 col-md-4 col-sm-4 col-xs-12 input-group">
+                    <button type="button" style="width:100%" class="btn btn-primary" id="btnSendClose" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> 關閉</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section QuoteJs {
+
+}

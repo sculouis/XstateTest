@@ -1,0 +1,6 @@
+﻿#panel-template,#div-nodata,#downloadIframe{
+    display:none;
+}
+.dropdown-menu{
+    z-index:2000 !important;
+}

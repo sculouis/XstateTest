@@ -1,0 +1,527 @@
+﻿
+
+.datatable_selectrow_color{
+    color:blue !important;
+}
+
+.datatable_row_color{
+    color:black !important;
+}
+
+/*避免IE頁面被Scroll Bar擋到*/
+body {
+    -ms-overflow-style: scrollbar !important;
+}
+
+/*滑鼠指標-pointer*/
+.mouse_pointer {
+    cursor: pointer;
+}
+
+/*在Label裡CheckBox時使用*/
+.label_cbx {
+    cursor: pointer;
+    min-width: 5px !important;
+}
+
+/*Bootstrap select - Option的Hover樣式*/
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #d9534f !important;
+}
+
+
+.break {
+    word-break: break-all;
+}
+
+
+.panel {
+    margin: 5px !important;
+    margin-bottom: 10px !important;
+}
+
+/*DataTables 的 Th 改用FontAwesome - Start*/
+table.dataTable thead th {
+    position: relative;
+    background-image: none !important;
+}
+
+    table.dataTable thead th.sorting:after,
+    table.dataTable thead th.sorting_asc:after,
+    table.dataTable thead th.sorting_desc:after {
+        position: absolute;
+        /*top: 12px;*/
+        right: 15px;
+        display: block;
+        font-family: FontAwesome;
+    }
+
+    table.dataTable thead th.sorting:after {
+        content: "\f0dc";
+        color: #ddd;
+        font-size: 0.8em;
+        padding-top: 0.12em;
+    }
+
+    table.dataTable thead th.sorting_asc:after {
+        content: "\f0de";
+    }
+
+    table.dataTable thead th.sorting_desc:after {
+        content: "\f0dd";
+    }
+/*DataTables 的 Th 改用FontAwesome - End*/
+
+
+
+/*下拉選單固定寬度*/
+#sltZFlag,
+#sltCType,
+#sltSeqNo {
+    width: 85px;
+}
+
+/*保險明細保持右邊5px*/
+#tblInsuranceList_wrapper,#tblPaymentDataList_wrapper {
+    padding-right: 5px;
+}
+
+/*繳費明細保持右邊5px*/
+#tblPaymentCheckList_wrapper {
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 40px;
+}
+
+.input-group {
+    padding-right: 5px;
+    padding-left: 0px;
+    padding-top: 5px;
+}
+
+/*資料列顏色*/
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: #e4f2f5;
+}
+
+.panel-body {
+    padding: 0px 0px 8px 5px;
+}
+
+#tblInsuranceList {
+    margin-top: 10px;
+}
+
+.modal-header {
+    font-family: "微軟正黑體" !important;
+    text-align: center;
+    padding: 9px 15px;
+    border-bottom: 1px solid red;
+    background-color: red;
+    color: white;
+    -webkit-border-top-left-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -moz-border-radius-topleft: 3px;
+    -moz-border-radius-topright: 3px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+#read_soruce {
+    margin-top: 10px;
+}
+
+    #read_soruce [class*="col-"] {
+        margin-bottom: 5px;
+        padding-right: 0px;
+        padding-left: 20px;
+    }
+
+#search[class*="col-"] {
+    margin-bottom: 10px;
+    padding-right: 0px;
+    padding-left: 20px;
+}
+
+#divInsurance {
+    z-index: 88998;
+}
+
+
+/*Layout-RenderBody*/
+.renderbody {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+}
+
+@media (min-width: 768px) {
+    #page-wrapper {
+        padding: 0 20px !important;
+    }
+}
+
+.nopadding .col-lg-2 {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 0px;
+    overflow-x: hidden;
+}
+
+/*DataTabls-FixHeader*/
+table.fixedHeader-floating {
+    position: fixed !important;
+    background-color: white;
+}
+
+    table.fixedHeader-floating.no-footer {
+        border-bottom-width: 0;
+    }
+
+table.fixedHeader-locked {
+    position: absolute !important;
+    background-color: white;
+}
+
+@media print {
+    table.fixedHeader-floating {
+        display: none;
+    }
+}
+
+/* Extra Things */
+body {
+    font-size: 14px;
+    background-color: #f8f8f8;
+    font-family: Arial, "微軟正黑體", "serif", "Microsoft JhengHei" !important;
+}
+
+/*分隔線-帶有Hotains字樣*/
+hr.hrHotains {
+    border-top: 1px solid #e8e6e6;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 7px;
+}
+
+    hr.hrHotains:after {
+        content: 'Hotains';
+        position: relative;
+        top: -17px;
+        color: #e8e6e6;
+        font-size: 10px;
+    }
+
+
+.input-xs {
+    width: 60%;
+    height: 20px;
+    padding: 1px 1px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+h3 {
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 50px;
+}
+
+    h3 i {
+        color: #444;
+    }
+
+
+#wrapper {
+    width: 100%;
+}
+
+#page-wrapper {
+    padding: 0 15px;
+    margin: 0px;
+    min-height: 568px;
+    background-color: white;
+}
+
+@media (min-width: 768px) {
+    #page-wrapper {
+        position: inherit;
+        margin: 0 0 0 205px;
+        padding: 0 30px;
+        border-left: 1px solid #e7e7e7;
+    }
+}
+
+/*Layout-Navbar_Start*/
+.navbar-top-links {
+    margin-right: 0;
+}
+
+    .navbar-top-links li {
+        display: inline-block;
+    }
+
+        .navbar-top-links li:last-child {
+            margin-right: 15px;
+        }
+
+        .navbar-top-links li a {
+            padding: 15px;
+            min-height: 50px;
+        }
+
+    .navbar-top-links .dropdown-menu li {
+        display: block;
+    }
+
+        .navbar-top-links .dropdown-menu li:last-child {
+            margin-right: 0;
+        }
+
+        .navbar-top-links .dropdown-menu li a {
+            padding: 3px 20px;
+            min-height: 0;
+        }
+
+            .navbar-top-links .dropdown-menu li a div {
+                white-space: normal;
+            }
+
+    .navbar-top-links .dropdown-messages,
+    .navbar-top-links .dropdown-tasks,
+    .navbar-top-links .dropdown-alerts {
+        width: 310px;
+        min-width: 0;
+    }
+
+    .navbar-top-links .dropdown-messages {
+        margin-left: 5px;
+    }
+
+    .navbar-top-links .dropdown-tasks {
+        margin-left: -59px;
+    }
+
+    .navbar-top-links .dropdown-alerts {
+        margin-left: -123px;
+    }
+
+    .navbar-top-links .dropdown-user {
+        right: 0;
+        left: auto;
+    }
+
+.sidebar .sidebar-nav.navbar-collapse {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.sidebar .sidebar-search {
+    padding: 15px;
+}
+
+.sidebar ul li {
+    border-bottom: 1px solid #e7e7e7;
+}
+
+    .sidebar ul li a.active {
+        background-color: #eeeeee;
+    }
+
+.sidebar .arrow {
+    float: right;
+}
+
+.sidebar .fa.arrow:before {
+    content: "\f104";
+}
+
+.sidebar .active > a > .fa.arrow:before {
+    content: "\f107";
+}
+
+.sidebar .nav-second-level li,
+.sidebar .nav-third-level li {
+    border-bottom: none !important;
+}
+
+    .sidebar .nav-second-level li a {
+        padding-left: 37px;
+    }
+
+    .sidebar .nav-third-level li a {
+        padding-left: 52px;
+    }
+
+@media (min-width: 768px) {
+    .sidebar {
+        z-index: 1;
+        position: absolute;
+        width: 205px;
+        margin-top: 51px;
+    }
+
+    .navbar-top-links .dropdown-messages,
+    .navbar-top-links .dropdown-tasks,
+    .navbar-top-links .dropdown-alerts {
+        margin-left: auto;
+    }
+}
+
+.btn-outline {
+    color: inherit;
+    background-color: transparent;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+
+.btn-success.btn-outline {
+    color: #5cb85c;
+}
+
+.btn-info.btn-outline {
+    color: #5bc0de;
+}
+
+.btn-warning.btn-outline {
+    color: #f0ad4e;
+}
+
+.btn-danger.btn-outline {
+    color: #d9534f;
+}
+
+    .btn-primary.btn-outline:hover,
+    .btn-success.btn-outline:hover,
+    .btn-info.btn-outline:hover,
+    .btn-warning.btn-outline:hover,
+    .btn-danger.btn-outline:hover {
+        color: white;
+    }
+/*Layout-Navbar_End*/
+
+
+
+
+/*XS*/
+@media (min-width: 1px) {
+
+    #divAddorAlterCheck > div > div > div.col-lg-12.text-right {
+        margin-bottom: 10px;
+    }
+
+    .navbar-brand {
+        float: left;
+        padding: 15px 3px;
+        font-size: 1.7rem;
+        line-height: 20px;
+    }
+}
+
+/*SM*/
+@media (min-width: 768px) {
+}
+
+/*MD*/
+@media (min-width: 992px) {
+    input, select {
+        min-width: 100px !important;
+    }
+
+    #iptTranDateX_BringIn {
+        width: 180px;
+    }
+
+    #selDateInterval, #selPrint02, #selPrint01 {
+        min-width: 140px !important;
+    }
+
+    .modal-lg {
+        width: 70%;
+    }
+
+    .modal {
+        top: 5%;
+        bottom: 0;
+        left: 0;
+        z-index: 10040;
+        overflow: auto;
+        overflow-y: auto;
+    }
+}
+
+/*LG*/
+@media (min-width: 1200px) {
+}
+
+/*Tooltip-Start*/
+/*.tooltip {
+    text-align: center;
+    text-shadow: 0 1px rgba( 0, 0, 0, .5 );
+    line-height: 1.5;
+    color: #fff;
+    background: #333;
+    background: -webkit-gradient( linear, left top, left bottom, from( rgba( 0, 0, 0, .6 ) ), to( rgba( 0, 0, 0, .8 ) ) );
+    background: -webkit-linear-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
+    background: -moz-linear-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
+    background: -ms-radial-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
+    background: -o-linear-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
+    background: linear-gradient( top, rgba( 0, 0, 0, .6 ), rgba( 0, 0, 0, .8 ) );
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-top: 1px solid #fff;
+    -webkit-box-shadow: 0 3px 5px rgba( 0, 0, 0, .3 );
+    -moz-box-shadow: 0 3px 5px rgba( 0, 0, 0, .3 );
+    box-shadow: 0 3px 5px rgba( 0, 0, 0, .3 );
+    position: absolute;
+    z-index: 999999;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+    .tooltip:after {
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #333;
+        border-top-color: rgba( 0, 0, 0, .7 );
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
+        margin-left: -10px;
+    }
+
+    .tooltip.top:after {
+        border-top-color: transparent;
+        border-bottom: 10px solid #333;
+        border-bottom-color: rgba( 0, 0, 0, .6 );
+        top: -20px;
+        bottom: auto;
+    }
+
+    .tooltip.left:after {
+        left: 10px;
+        margin: 0;
+    }
+
+    .tooltip.right:after {
+        right: 10px;
+        left: auto;
+        margin: 0;
+    }
+
+.tooltip {
+    opacity: 1;
+    max-width: 340px;
+    top: 65.1111px;
+}*/
+/*Tooltip-End*/

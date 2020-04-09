@@ -1,0 +1,102 @@
+<!--選單-->
+<template id="hotainsmenu">
+    <div id="menu" class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+                <li v-for="menu in menus" :key="menu.uri">
+                    <a v-bind:href="menu.uri"><i class="fa fa-bookmark-o"></i>&nbsp{{menu.name}}</a>
+                </li>
+                <li class="">
+                    <a href="#"><i class="fa fa-bookmark-o"></i> 表單下載專區</a>
+                    <ul class="nav">
+                        <li><a href="/FormTemplate/團體件報價空白表單.xlsx" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                    class="fa fa-bookmark"></i> 團體件空白表單</a></li>
+                        <li><a href="/FormTemplate/汽車保險業務承保資料表.pdf" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                    class="fa fa-bookmark"></i> 汽車保險業務承保資料表</a></li>
+                        <li><a href="/FormTemplate/汽車險勘車連絡單.pdf" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                    class="fa fa-bookmark"></i> 汽車險勘車連絡單</a></li>
+                        <li><a href="/FormTemplate/傷害險被保險人名冊.xlsx" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                    class="fa fa-bookmark"></i> 傷害險被保險人名冊</a></li>
+                        @*<li><a href="/FormTemplate/汽車保險單批改申請書.pdf" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                    class="fa fa-bookmark"></i> 汽車保險單批改申請書</a></li>*@
+                    </ul>
+                </li>
+                <li>
+                    <a href="/EISQuotation/EISQuotation"><i class="fa fa-bookmark-o"></i> EIS新件報價</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>
+
+<!--頁面大區塊-->
+<template id="mpanel">
+<div id="mainContent" class="panel panel-info">
+    <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 input-group" style="font-family:標楷體;color: #4d828d;padding-left:5px;padding-top: 8px;font-size:18px;">
+        <I class="fa fa-angle-double-right"></I>
+        <span id="spanTitle">&nbsp;{{titleName}}</span>
+    </div>
+    <slot></slot>
+</div>
+</template>
+
+<!--頁面小區塊-->
+<template id="hotainspanel">
+    <div class="panel panel-info">
+        <div class="panel-heading data">
+            {{panelName}}
+        </div>
+        <div id="panelId" class="panel-body">
+            <slot></slot>
+        </div>
+    </div>
+</template>
+
+<!--form 基本控件-->
+<template id="textbox">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+        <span class="input-group-addon">{{titleName}}</span>
+        <input type="text" class="form-control upperCase" v-model="val" placeholder="placeHolder" disabled="isDisabled">
+    </div>
+</template>
+
+<template id="textnumber">
+    <input class="input" v-bind:class="{h30:small}" v-model="val" placeholder="placeHolder">
+</template>
+
+<template id="textareabox">
+    <textarea type="text" class="input h38" v-model="val" placeholder=""></textarea>
+</template>
+
+<template id="selectpicker">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+        <span class="input-group-addon"><span style="color:red;">＊</span>{{titleName}}</span>
+        <select class="form-control selectpicker show-menu-arrow oldval" data-header="請輸入至少2個關鍵字" data-source="ajax"
+            liveSearchStyle="contains" showContent="true" data-live-search="true" v-bind:id="selectId" required></select>
+        <input v-bind:id="inputId" type="text" class="form-control" maxlength="50" disabled style="display:none;">
+    </div>
+</template>
+
+<template id="datepicker">
+    <div class='w100 input-group date01 custom-input datetimepicker1' v-bind:id="myid" ref="date">
+        <input type='text' class="input" v-bind:class="{'h30':small}" placeholder="yyyy-mm-dd" v-model="val" />
+        <span class="input-group-addon d-input" v-bind:class="{'addon-table':small}">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
+</template>
+
+
+<template id="radiobutton">
+    <div class="cell-box-1">
+        <div class="cell"><label><input v-bind:name="myid" type="radio" value="true" v-model="val"><span
+                    class="success-text">成功 : </span>說明文字。</label></div>
+        <div class="cell"><label><input v-bind:name="myid" type="radio" value="false" v-model="val"><span
+                    class="fail-text">失敗 : </span>說明文字。</label></div>
+    </div>
+</template>
+
+<template id="checkbox">
+    <label><input v-bind:id="myid" v-model="val" type="checkbox"><span class="checkbox-text"
+            v-text="myTitle"></span></label>
+</template>

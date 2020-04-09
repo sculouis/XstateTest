@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Hotains System">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="pragma" content="no-cache"> @*舊式寫法，加是為了相容性。*@
+    <meta http-equiv="expires" content="0"> @*將網頁設做立即過期*@
+    <link rel="icon" href="~/favicon.ico" />
+    <title>@ViewData["Title"]</title>
+    @*main css *@
+    <link rel="stylesheet" href="~/css/BootStrap/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/BootStrap/bootstrap-theme.css" />
+    <link rel="stylesheet" href="~/css/BootStrap/bootstrap-datetimepicker.css" />
+    <link rel="stylesheet" href="~/css/BootStrap/bootstrap-toggle.css" />
+    <link rel="stylesheet" href="~/css/BootStrap/bootstrap-select.css" />
+    <link rel="stylesheet" href="~/css/jquery-confirm.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/normalize.css" />
+    <link rel="stylesheet" href="~/css/tooltipster.css" />
+    <link rel="stylesheet" href="~/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/css/menu.css" />
+    @*DataTables_CSS*@
+    <link rel="stylesheet" href="~/css/DataTable/dataTables.bootstrap.css" />
+    <link rel="stylesheet" href="~/css/DataTable/dataTables.responsive.css" />
+    @RenderSection("Css", required: false)
+</head>
+
+<body>
+    <div class="growlUI"></div>
+    <div id="container">
+        <div class="wrapper">
+            <div class="content-main">
+                <!-- Navigation -->
+                <nav id="page-header" class="navbar navbar-default navbar-fixed-top" role="navigation"
+                    style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a href="" class="navbar-brand"></a>
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a href="#" class="navbar-brand"><img src="~/css/Images/logo.png" />和泰產險<span
+                                style="font-size:8px"></span></a>
+                        <span id="spSystemName" class="navbar-brand">@ViewBag.SysName</span>
+                        <i class="fa fa-user fa-fw navbar-brand"></i>
+                        <span id="spAgentName" class="navbar-brand">@ViewBag.agentName 您好</span>
+                    </div>
+                </nav>
+                <hmenu></hmenu>
+            </div>
+            <br />
+            <div id="page-wrapper">
+                <div class="row">
+                    <div class="renderbody">
+                        <span
+                            style="color:red;font-size:14px;">為配合核心系統日處理作業時間，本平台使用時間為：同現行AS400，星期一至五使用到21:00(關帳日延至21:30)，星期六、日無時間限制</span>
+                        <input id="hidcountTime" name="hidcountTime" type="hidden" value="" />
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+            <!-- /#page-wrapper -->
+        </div>
+    </div>
+    </div>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - 和泰產險 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    @await Html.PartialAsync("_Component")
+
+
+    @**jquery的JS*@
+    <script src="~/lib/Jquery/jquery-1.10.2.js"></script>
+
+    @*<script src="~/lib/Jquery/jquery-1.10.2.intellisense.js"></script>*@
+    <script src="~/lib/Jquery/jquery.validate.js"></script>
+    <script src="~/lib/Jquery/jquery-blockui-2.70.0.js"></script>
+    <script src="~/lib/Jquery/jquery-confirm.js"></script>
+
+    @**Excel的JS*@
+    <script src="~/lib/xlsx/xlsx.full.min.js"></script>
+    <script src="~/lib/xlsx/jszip.js"></script>
+
+    @*產生Menu 的JS*@
+    <script src="~/lib/Third-party/metisMenu.min.js"></script>
+
+    @*產生回到最上方按鈕 的JS*@
+    <script src="~/lib/Third-party/scrolls.js"></script>
+    @**bootstrap 的JS*@
+    <script src="~/lib/Bootstrap/bootstrap.js"></script>
+    <script src="~/lib/Bootstrap/bootstrap-datetimepicker.js"></script>
+    <script src="~/lib/Bootstrap/bootstrap-datetimepicker.zh-TW.js"></script>
+    <script src="~/lib/Bootstrap/bootstrap-select.js"></script>
+    <script src="~/lib/Bootstrap/bootstrap-select-search.js"></script>
+    <script src="~/lib/Bootstrap/bootstrap-toggle.js"></script>
+
+    @**datatable 的JS*@
+    <script src="~/lib/DataTable/jquery.dataTables.js"></script>
+    <script src="~/lib/DataTable/dataTables.chinese.lan.js"></script>
+    <script src="~/lib/DataTable/dataTables.bootstrap.js"></script>
+    <script src="~/lib/DataTable/dataTables.responsive.js"></script>
+    <script src="~/lib/DataTable/dataTables.fixedHeader.min.js"></script>
+
+    @*Vue 的JS*@
+    <script src="~/lib/Vue/vue-2.6.11.js"></script>
+    <script src="~/lib/Vue/vuex-3.1.3.js"></script>
+    <script src="~/lib/Vue/vue-router-3.1.6.js"></script>
+
+    @*表單的JS*@
+    <script src="~/js/Page/public.js"></script>
+    <script src="~/js/Page/menu.js"></script>
+
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+
+</html>

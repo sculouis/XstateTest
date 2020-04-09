@@ -1,0 +1,118 @@
+﻿/*表頭*/
+div.dataTables_wrapper > .table-striped > thead > tr > td,
+.table-striped > thead > tr > th {
+    background-color: #D8F2DA !important;
+    vertical-align: middle;
+}
+/*表身*/
+div.dataTables_wrapper > .table-striped > tbody > tr > td,
+.table-striped > tbody > tr > th {
+    background-color: white !important;
+    vertical-align: middle;
+}
+/*已選取*/
+div.dataTables_wrapper > .table-striped > tbody > tr.selected > td,
+.table-striped > tbody > tr.selected > th {
+    background-color: #D4D6EB !important;
+    vertical-align: middle;
+}
+/*滑動:已選取*/
+div.dataTables_wrapper > .table-striped > tbody > tr:hover.selected > td,
+.table-striped > tbody > tr:hover.selected > th {
+    background-color: #AAB7D1 !important;
+    vertical-align: middle;
+}
+/*滑動*/
+div.dataTables_wrapper > .table-striped > tbody > tr:hover > td,
+.table-striped > tbody > tr:hover > th {
+    background-color: #F4F5DA !important;
+    vertical-align: middle;
+}
+
+/*XS*/
+@media (min-width: 1px) {
+    /*設定前後間距為0*/
+    .view-td-content {
+        padding-left: 0px;
+        padding-right: 0px;
+        line-height: 17px;
+    }
+}
+
+/*SM*/
+@media (min-width: 768px) {
+}
+
+/*MD*/
+@media (min-width: 992px) {
+    /*設定前後間距為0*/
+    .view-td-content {
+        padding-left: 0px;
+        padding-right: 0px;
+        line-height: inherit;
+    }
+    #iptCHL1 {
+        min-width: 125px !important;
+    }
+
+    #iptIssueYear, #iptEngineNo, #selZCVRTYPE {
+        min-width: 200px !important;
+    }
+
+    #iptAGNTNAME {
+        min-width: 250px !important;
+    }
+}
+
+/*LG*/
+@media (min-width: 1200px) {
+}
+/*隱藏欄位*/
+.hide_column {
+    display: none;
+}
+/*自動換行欄位*/
+.break_column {
+    word-break: break-word;
+    vertical-align: top;
+}
+/*group 縮小欄位(使用範例:class="input-group-addon input-group-narrow")*/
+.input-group-narrow {
+    width: 0px;
+    padding: 0px;
+    font-size: 0px;
+    border: 0;
+    display: table-cell;
+}
+/*查詢式下拉，滑鼠移至上方，不顯示陰影*/
+.dropdown-toggle:hover, .dropdown-toggle:focus {
+    background-color: #ffffff;
+    background-position: 0 0px;
+}
+/*設定_所有輸入框被鎖住時的樣式(主要針對IOS處理，因為IOS在disabled的時候會預設opacity: 0.4)*/
+input:disabled, input[disabled] {
+    color: #000000;
+    opacity: 1;
+}
+
+
+/*視窗_[檢視明細]*/
+
+#popuInsInfo .modal-header {
+    background-color: #CC0000;
+    border-bottom-color: #CC0000;
+}
+
+#popuInsInfo .panel-body {
+    padding: 10px 0px;
+    line-height: 2;
+}
+
+#popuInsInfo h4 {
+    font-weight: bold;
+}
+
+.td-title {
+    white-space: nowrap;
+    color:#cc0000;
+}
