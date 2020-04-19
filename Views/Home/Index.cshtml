@@ -21,6 +21,10 @@
         <date-ym title-name="日期(年月)" v-model="formdata.ymvalue" set-disabled="false"></date-ym>
         <radio-button title-name="通用RadioButton" set-disabled='false' v-model="formdata.radiovalue" v-bind:items='formdata.items'></radio-button>
     </panel>
+    <panel panel-name="table元件" panel-id="baseFormComponents">
+        <hotai-table></hotai-table>
+    </panel>    
+
 </main-panel>
 @section Scripts {
     <script type="text/javascript" src="~/js/site.js"></script>

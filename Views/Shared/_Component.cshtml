@@ -99,9 +99,8 @@
 <template id="selectpickerTemplate">
     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
         <span class="input-group-addon"><span style="color:red;">＊</span>{{titleName}}</span>
-        <select v-bind:id="myid" v-model="val" data-hide-disabled="true" data-size="10"
-            tabindex="-98" class="selectpicker show-menu-arrow oldval" 
-            data-live-search="true" title="請選擇">
+        <select v-bind:id="myid" v-model="val" data-hide-disabled="true" data-size="10" tabindex="-98"
+            class="selectpicker show-menu-arrow oldval" data-live-search="true" title="請選擇">
             <option selected value="-1">取消選擇</option>
             <option v-for="item in items" v-bind:key="item.value" v-bind:value="item.value" v-text="item.text"></option>
         </select>
@@ -188,14 +187,16 @@
     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group" style="display: table;">
         <span class="input-group-addon"><span style="color: red;" cltctype="P">＊</span>{{titleName}}</span>
         <span class="input-group-addon" style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span>
-        <select v-model="yearVal" class="form-control" style="padding-left:5px; min-width:75px !important;" required="" v-bind:disabled="isdisabled">
+        <select v-model="yearVal" class="form-control" style="padding-left:5px; min-width:75px !important;" required=""
+            v-bind:disabled="isdisabled">
             <option value="">年</option>
             <option value="2019">108</option>
             <option value="2018">107</option>
             <option value="2017">106</option>
         </select>
         <span class="input-group-addon" style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span>
-        <select v-model="monthVal" class="form-control" style="padding-left:5px; min-width:57px !important;" required="" v-bind:disabled="isdisabled">
+        <select v-model="monthVal" class="form-control" style="padding-left:5px; min-width:57px !important;" required=""
+            v-bind:disabled="isdisabled">
             <option value="">月</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -211,7 +212,8 @@
             <option value="12">12</option>
         </select>
         <span class="input-group-addon" style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span>
-        <select v-model="dayVal" class="form-control" style="padding-left:5px; min-width:57px !important;" required="" v-bind:disabled="isdisabled">
+        <select v-model="dayVal" class="form-control" style="padding-left:5px; min-width:57px !important;" required=""
+            v-bind:disabled="isdisabled">
             <option value="">日</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -230,16 +232,16 @@
             maxlength="8" cltctype="P" required="" v-bind:placeholder="titleName" autocomplete="off"
             style="display: none;" v-bind:disabled="isdisabled">
         <span class="input-group-addon" style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span>
-        <select v-model="yearVal" class="form-control" style="padding-left:5px; min-width:75px !important;"
-            required="" v-bind:disabled="isdisabled">
+        <select v-model="yearVal" class="form-control" style="padding-left:5px; min-width:75px !important;" required=""
+            v-bind:disabled="isdisabled">
             <option value="">年</option>
             <option value="2019">108</option>
             <option value="2018">107</option>
             <option value="2017">106</option>
         </select>
         <span class="input-group-addon" style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span>
-        <select v-model="monthVal" class="form-control" style="padding-left:5px; min-width:57px !important;"
-            required="" v-bind:disabled="isdisabled">
+        <select v-model="monthVal" class="form-control" style="padding-left:5px; min-width:57px !important;" required=""
+            v-bind:disabled="isdisabled">
             <option value="">月</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -260,4 +262,20 @@
 <template id="checkbox">
     <label><input v-bind:id="myid" v-model="val" type="checkbox"><span class="checkbox-text"
             v-text="myTitle"></span></label>
+</template>
+
+<template id="tableTemplate">
+    <table v-bind:id="myid" style="width:100%; margin-top:5px"
+        class="display table table-striped table-bordered table-hover dt-responsive">
+        <thead>
+            <tr>
+                <th class="text-center" style="white-space: nowrap;"> 保額一 </th>
+                <th class="text-center" style="white-space: nowrap;"> 保額二 </th>
+                <th class="text-center" style="white-space: nowrap;"> 保額三 </th>
+                <th class="text-center" style="white-space: nowrap;"> 自負額 </th>
+                <th class="text-center" style="white-space: nowrap;"> 保險費 </th>
+                <th class="text-center" style="white-space: nowrap;"> 月繳保費 </th>
+            </tr>
+        </thead>
+    </table>
 </template>

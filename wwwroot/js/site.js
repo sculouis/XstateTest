@@ -37,37 +37,13 @@ Vue.component('hotai-menu', {
     data: function () {
         return {
             menus: [{
-                    uri: "/Quote/QuoteIndex?test",
-                    name: '簡易試算'
+                    uri: "/",
+                    name: '元件說明'
                 },
                 {
-                    uri: "/Quotation/QuotationEdit",
+                    uri: "/Quotation",
                     name: '新件報價'
-                },
-                {
-                    uri: "/Quotation/QuotationEdit?ConQuot",
-                    name: '續保件報價'
-                },
-                {
-                    uri: "/Quotation/QuotationQuery",
-                    name: '報價單查詢'
-                },
-                {
-                    uri: "QuotationBatch",
-                    name: '團體件報價專區'
-                },
-                // { uri:"" ,name:'表單下載專區',
-                // secondmenus:[
-                //     { uri:"/FormTemplate/團體件報價空白表單.xlsx" ,name:'團體件空白表單' },
-                //     { uri:"/FormTemplate/汽車保險業務承保資料表.pdf" ,name:'汽車保險業務承保資料表' },
-                //     { uri:"/FormTemplate/汽車險勘車連絡單.pdf" ,name:'汽車險勘車連絡單' },
-                //     { uri:"/FormTemplate/傷害險被保險人名冊.xlsx" ,name:'傷害險被保險人名冊' }
-                // ]
-                // },
-                {
-                    uri: "/EISQuotation/EISQuotation",
-                    name: 'EIS新件報價'
-                },
+                }
             ]
         }
     },
@@ -283,6 +259,30 @@ Vue.component('date-ym', {
         }
 })
 
+Vue.component('hotai-table', {
+    props: ['titleName'],
+    template: '#tableTemplate',
+    mixins: [commonMixin],
+    data: function () {
+        return {
+            val: null,
+            dataSet:[
+                [ "Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800" ],
+                [ "Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750" ]
+            ]
+        }
+    },
+    mounted: function () {
+        $("#" + this.myid).DataTable({
+            "paging":   false,
+            "ordering": false,
+            "info":     false,
+            data: this.dataSet
+    })},
+}
+)
+
+
 //程式主體
 var app = new Vue({
     el: '#container',
@@ -308,9 +308,40 @@ var app = new Vue({
     }
 })
 
+const { Machine, actions, interpret } = XState; // global vari
+
+const toggleMachine = Machine({
+    id: 'toggle',
+    context: {
+      /* some data */
+    },
+    initial: 'inactive',
+    states: {
+      inactive: {
+        on: { TOGGLE: 'active' }
+      },
+      active: {
+        on: { TOGGLE: 'inactive' }
+      }
+    }
+  });
+
+  console.log(toggleMachine.initialState)
+
+ var stateService = interpret(toggleMachine)
+
+ stateService.start()
+ console.log('初始值')
+ console.log(stateService.state.value)
+ stateService.send('TOGGLE')
+ console.log('轉換後')
+ console.log(stateService.state.value)
+
+
 $(function () {
     $.get("https://localhost:5001/Home/GetTestData", function (result) {
         console.log(result);
     });
+
 
 })
