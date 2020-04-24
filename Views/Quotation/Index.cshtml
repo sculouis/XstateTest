@@ -1,14 +1,815 @@
 @{
-    ViewData["Title"] = "Quotation Page";
+    ViewBag.Title = "新建報價";
 }
-<main-panel main-panel-id="mainContent" title-name="UI 元件">
+
+<main-panel title-name="建立新報價單">
     <div class="row">
     </div>
-    <panel panel-name="panel元件" panel-id="baseFormComponents">
-        <h2>Hello World</h2>
+    <notitle-panel>
+        <input-text title-name="報價日期" disabled></input-text>
+        <input-text-icon title-name="報價單編號" icon-name="fa-files-o"
+                         placeholder="請輸入文字" button-title="複製報價單"></input-text-icon>
+    </notitle-panel>
+    <panel title-name="保單基本資料" v-bind:show-body="current == 'QuoteBasic'">
+        <normal-select title-name="強制車種" v-bind:items="context.HotVehicleCategory" v-model="model.selMANMVPZMTYPE" v-bind:disabled="context.QuoteBasicAction?false:true"></normal-select>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group" v-show="model.selMANMVPZMTYPE !=''">
+            <span class="input-group-addon">保險期間</span>
+            <div class="input-group-addon"
+                 style="width:0%; background-color:#eeeeee;border: 1px solid #cccccc;height:34px;">
+                <label style="font-weight:normal; margin-bottom:0px;">
+                    <input id="chkFRDATE1" value="1" type="checkbox"
+                           class="label_cbx" placeholder="" autocomplete="off" v-bind:disabled="context.QuoteBasicAction?true:false">一年期
+                </label>
+                <label style="font-weight:normal; margin-bottom:0px;">
+                    <input id="chkFRDATE2" value="2" type="checkbox"
+                           class="label_cbx" placeholder="" autocomplete="off" v-bind:disabled="context.QuoteBasicAction?true:false">二年期
+                </label>
+            </div>
+        </div>
+        <date-ymd title-name="保期(起)" required v-show="model.selMANMVPZMTYPE !=''" v-bind:disabled="context.QuoteBasicAction?true:false"></date-ymd>
+        <date-ymd title-name="保期(迄)" required v-show="model.selMANMVPZMTYPE !=''" v-bind:disabled="context.QuoteBasicAction?true:false"></date-ymd>
+        <div class="row"></div>
+        <normal-select title-name="任意車種" v-bind:items="context.HotVehicleCategory" v-model="model.selMVPZMTYPE"></normal-select>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group" v-show="model.selMVPZMTYPE !=''">
+            <span class="input-group-addon">保險期間</span>
+            <div class="input-group-addon"
+                 style="width:0%; background-color:#eeeeee;border: 1px solid #cccccc;height:34px;" v-show="model.selMVPZMTYPE !=''">
+                <label style="font-weight:normal; margin-bottom:0px;">
+                    <input id="chkCCDATE" name="chkCCDATE" value="Y"
+                           type="checkbox" class="label_cbx" placeholder="" autocomplete="off">同強制險
+                </label>
+            </div>
+        </div>
+        <date-ymd title-name="保期(起)" required v-show="model.selMVPZMTYPE !=''"></date-ymd>
+        <date-ymd title-name="保期(迄)" required v-show="model.selMVPZMTYPE !=''"></date-ymd>
+        <div class="row"></div>
+        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.QuoteBasicAction" v-on:click="changeAction()"></hotain-button>
+        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="!context.QuoteBasicAction" v-on:click="jumpAction('JumpToQuoteBasic')"></hotain-button>
     </panel>
+    <panel title-name="招攬機構/業務人員資料" v-bind:show-body="current == 'SalesManData'">
+        <input-group title-name="招攬機構">
+            <select id="selPolicyProducer" class="form-control" disabled="disabled">
+                <option value=""></option>
+                <option value="Broker1Code">Broker1Code-Broker1Name</option>
+                <option value="Broker2Code">Broker2Code-Broker2Name</option>
+                <option value="000001">000001-TEST</option>
+                <option value="3212341">3212341-3212341</option>
+                <option value="CA010000">CA010000-錠嵂保險經紀人股份有限公司</option>
+                <option value="CA010001">CA010001-錠嵂保經台北分處</option>
+                <option value="AACDL00000">AACDL00000-錠嵂保險經紀人股份有限公司</option>
+                <option value="AACDL01001">AACDL01001-錠嵂保險經紀人股份有限公司 台北營業處</option>
+                <option value="AACDL02001">AACDL02001-錠嵂保險經紀人股份有限公司 台中營業處</option>
+                <option value="AACDL02002">AACDL02002-錠嵂保險經紀人股份有限公司 中二營業處</option>
+            </select>
+            <input type="text" class="form-control" maxlength="50" placeholder="" autocomplete="off"
+                   disabled="disabled">
+        </input-group>
+        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+            <input id="iptPolicyProducer" type="text" class="form-control" maxlength="50" disabled="disabled"
+                   placeholder="" autocomplete="off">
+        </div>
+        <input-text title-name="單位別" required></input-text>
+        <input-text title-name="業務人員編號" maxlength="8" v-bind:class-enum="colSize.Middle2" placeholder="編號(外部通路專用)"
+                    v-bind:class-enum="colSize.Big" disabled></input-text>
+        <input-text title-name="業務員登錄字號" maxlength="10" v-bind:class-enum="colSize.Middle3" placeholder="業務員登錄字號"
+                    v-bind:class-enum="colSize.Big" disabled></input-text>
+        <input-group title-name="通路別">
+            <input type="text" class="form-control upperCase" maxlength="50" disabled="disabled" placeholder="通路別"
+                   autocomplete="off">
+            <span class="input-group-addon" style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span>
+            <select class="form-control" disabled="disabled"></select>
+        </input-group>
+        <input-text title-name="服務人員" placeholder="服務人員" disabled></input-text>
+        <input-text title-name="電話" placeholder="電話"></input-text>
+        <input-text title-name="傳真" placeholder="傳真"></input-text>
+        <input-text title-name="E-Mail" placeholder="E-Mail"></input-text>
+        <input-group title-name="法人車隊號碼">
+            <input type="text" class="form-control upperCase" maxlength="50" disabled="disabled" placeholder="法人車隊號碼"
+                   autocomplete="off">
+            <span class="input-group-addon" style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span>
+            <select class="form-control" disabled="disabled"></select>
+        </input-group>
+        <input-text title-name="電銷人員代號" placeholder="電銷人員代號"></input-text>
+        <div class="row"></div>
+        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.SalesManDataAction" v-on:click="changeAction()"></hotain-button>
+        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="!context.SalesManDataAction" v-on:click="jumpAction('JumpToSalesManData')"></hotain-button>
+    </panel>
+    <panel title-name="要保人及被保險人資料" v-bind:show-body="current == 'InsurerData'">
+        <label style="color:#3a87ad; margin-bottom:0px;">要保人資料</label>
+        <div class="row"></div>
+        <radio-button title-name="客戶類別" v-bind:items="[{
+            name: '自然人',
+            value: true
+        }, {
+            name: '法人',
+            value: false
+        }]" required></radio-button>
+        <normal-select title-name="國別" required disabled></normal-select>
+        <input-text title-name="要保人ID/公司統編" placeholder="ID/統編" v-bind:class-enum="colSize.Middle2" disabled required>
+        </input-text>
+        <div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 input-group">
+            <button id="btnAPLCustID" type="button" style="width:99%" class="btn btn-info" data-toggle="modal"
+                    onclick="return chkCustInfoOpen(this);" disabled="disabled">
+                <i class="fa fa-search"></i>
+                已投保客戶查詢
+            </button>
+        </div>
+        <input-text title-name="姓名/公司名稱" placeholder="姓名/公司名稱" v-bind:class-enum="colSize.Middle3" required disabled>
+        </input-text>
+        <div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 input-group">
+            <button id="btnAPLCustID" type="button" style="width:99%" class="btn btn-info" data-toggle="modal"
+                    onclick="return chkCustInfoOpen(this);" disabled="disabled">
+                <i class="fa fa-search"></i>
+                客戶名稱查詢
+            </button>
+        </div>
+        <div class="row"></div>
+        <date-ymd title-name="生日" required disabled></date-ymd>
+        <normal-select title-name="性別" required disabled></normal-select>
+        <normal-select title-name="婚姻" disabled></normal-select>
+        <div class="row"></div>
+        <input-text title-name="公司電話" placeholder="公司電話" disabled></input-text>
+        <input-text title-name="家用電話" placeholder="家用電話" disabled></input-text>
+        <input-text title-name="手機號碼" placeholder="手機號碼" disabled></input-text>
+        <input-text title-name="傳真號碼" placeholder="傳真號碼" disabled></input-text>
+        <input-text title-name="E-Mail" placeholder="E-Mail" v-bind:class-enum="colSize.Middle5" disabled></input-text>
+        <div class="row"></div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 input-group">
+            <span class="input-group-addon">地址</span>
+            <select id="selCTLADD1" add2="selCTLADD2" addo="iptCTLADDO" class="form-control">
+                <option value=""></option>
+                <option v-for="item in context.StateProvCd" v-bind:key="item.code" v-bind:value="item.code">{{item.code + " - "  +item.name}}</option>
+            </select>
+            <span class="input-group-addon input-group-narrow"></span>
+            <select id="selCTLADD2" add1="selCTLADD1" addo="iptCTLADDO" addp="iptCTLADDPot" class="form-control"></select>
+        </div>
+        <input-text title-name="3碼" placeholder="地址" v-bind:class-enum="colSize.Big" disabled></input-text>
+        <div class="row"></div>
+        <label style="color:#3a87ad; margin-bottom:0px;">被保險人資料</label>&nbsp;&nbsp;
+        <label for="chkISAPL" style="color:blue; margin-bottom:0px;">同要保人</label>
+        <input id="chkISAPL" type="checkbox" class="label_cbx" placeholder="" autocomplete="off" disabled>
 
+        <div class="row"></div>
+        <radio-button title-name="客戶類別" v-bind:items="[{
+            name: '自然人',
+            value: true
+        }, {
+            name: '法人',
+            value: false
+        }]" required></radio-button>
+        <normal-select title-name="國別" required disabled></normal-select>
+        <input-text title-name="被保險人ID/公司統編" placeholder="ID/統編" v-bind:class-enum="colSize.Middle2" disabled required>
+        </input-text>
+        <div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 input-group">
+            <button id="btnAPLCustID" type="button" style="width:99%" class="btn btn-info" data-toggle="modal"
+                    onclick="return chkCustInfoOpen(this);" disabled="disabled">
+                <i class="fa fa-search"></i>
+                已投保客戶查詢
+            </button>
+        </div>
+        <input-text title-name="姓名/公司名稱" placeholder="姓名/公司名稱" v-bind:class-enum="colSize.Middle3" required disabled>
+        </input-text>
+        <div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 input-group">
+            <button id="btnAPLCustID" type="button" style="width:99%" class="btn btn-info" data-toggle="modal"
+                    onclick="return chkCustInfoOpen(this);" disabled="disabled">
+                <i class="fa fa-search"></i>
+                客戶名稱查詢
+            </button>
+        </div>
+        <div class="row"></div>
+        <date-ymd title-name="生日" required disabled></date-ymd>
+        <normal-select title-name="性別" required disabled></normal-select>
+        <normal-select title-name="婚姻" disabled></normal-select>
+        <div class="row"></div>
+        <input-text title-name="公司電話" placeholder="公司電話" disabled></input-text>
+        <input-text title-name="家用電話" placeholder="家用電話" disabled></input-text>
+        <input-text title-name="手機號碼" placeholder="手機號碼" disabled></input-text>
+        <input-text title-name="傳真號碼" placeholder="傳真號碼" disabled></input-text>
+        <input-text title-name="E-Mail" placeholder="E-Mail" v-bind:class-enum="colSize.Middle5" disabled></input-text>
+        <div class="row"></div>
+        <input-group title-name="地址" v-bind:class-enum="colSize.Middle4">
+            <input type="text" class="form-control upperCase" maxlength="50" disabled autocomplete="off">
+            <span class="input-group-addon" style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span>
+            <select class="form-control" disabled></select>
+        </input-group>
+        <input-text title-name="3碼" placeholder="地址" v-bind:class-enum="colSize.Big" disabled></input-text>
+        <normal-select title-name="與要保人關係" v-bind:class-enum="colSize.Big" required v-bind:items="context.RelToPolicyHolder"></normal-select>
+        <div class="row"></div>
+        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.InsurerDataAction" v-on:click="changeAction()"></hotain-button>
+        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="!context.InsurerDataAction" v-on:click="jumpAction('JumpToInsurerData')"></hotain-button>
+    </panel>
+    <panel title-name="車籍資料" v-bind:show-body="current == 'CarInfo'">
+        <select-piker title-name="廠型" placeholder="沒有選取任何項目" required disabled></select-piker>
+        <date-ym title-name="製造年月" required></date-ym>
+        <input-text title-name="重製價格" placeholder="重製價格"></input-text>
+        <input-text title-name="調整後重製價格" placeholder="調整後重製價格"></input-text>
+        <date-ym title-name="原始發造年月" required></date-ym>
+        <input-text-unit title-name="排氣量" placeholder="排氣量" unit-name="(立方公分/馬力)" required></input-text-unit>
+        <input-text-unit title-name="承載人數" placeholder="承載人數" unit-name="(人)" required></input-text-unit>
+        <input-text-unit title-name="噸數" placeholder="噸數" unit-name="(頓)" required></input-text-unit>
+        <input-text title-name="牌照" placeholder="牌照"></input-text>
+        <input-text title-name="引擎/車身編號" placeholder="引擎/車身編號"></input-text>
+        <div class="row"></div>
+        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.CarInfoAction" v-on:click="changeAction()"></hotain-button>
+        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="!context.CarInfoAction" v-on:click="jumpAction('JumpToCarInfo')"></hotain-button>
+    </panel>
+    <panel title-name="投保險種類" v-bind:show-body="current == 'InsInfo'">
+        <label style="color:#3a87ad; margin-bottom:0px;">
+            強制險資料
+            <input type="checkbox" class="label_cbx" placeholder="" autocomplete="off" disabled>
+        </label>
+        <div class="row"></div>
+        <normal-select title-name="強制等級" required></normal-select>
+        <input-text title-name="酒次" placeholder="酒次" required></input-text>
+        <input-text-unit title-name="酒駕金額" placeholder="酒駕金額" unit-name="元"></input-text-unit>
+        <input-text-unit title-name="優惠" placeholder="優惠" unit-name="元"></input-text-unit>
+        <input-text title-name="獎金" placeholder="獎金"></input-text>
+        <input-text-unit title-name="保費" placeholder="保費" unit-name="元"></input-text-unit>
+        <input-text title-name="強制序號" placeholder="強制序號"></input-text>
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 input-group" style="font-weight:bold; color:blue;">
+            <input id="chkEmail" type="checkbox" class="label_cbx" placeholder="" autocomplete="off"><label for="chkEmail">電子式保險證(※如勾選電子式則不另寄紙本)</label>
+        </div>
+        <div class="row panel"></div>
+        <label style="color:#3a87ad; margin-bottom:0px;">
+            任意險資料
+            <input type="checkbox" class="label_cbx" placeholder="" autocomplete="off" disabled>
+        </label>
+        <div class="row"></div>
+        <normal-select title-name="體係" v-bind:items="context.PointDiff"></normal-select>
+        <normal-select title-name="責係" v-bind:items="context.Grade"></normal-select>
+        <input-text title-name="任意序號" placeholder="任意序號"></input-text>
+        <normal-select title-name="計算"></normal-select>
+        <normal-select title-name="折舊率" v-bind:items="context.HotMonthlyDepreciationRate"></normal-select>
+        <normal-select title-name="付款方式"></normal-select>
+        <normal-select title-name="活動代碼"></normal-select>
+        <input-text title-name="專案代號" placeholder="專案代號"></input-text>
+        <normal-select-icon title-name="活動方案" v-bind:class-enum="colSize.Middle4" icon-name="fa-heart"
+                            button-title="我的最愛"></normal-select-icon>
+        <div class="row"></div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+            <button type="button" style="width:100%" class="btn btn-info" id="btnInsNew">
+                <i class="fa fa-plus"></i>
+                投保險種
+            </button>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+            <button type="button" style="width:100%" class="btn btn-info" id="btnDelInsAny">
+                <i class="fa fa-times"></i>
+                清除任意承保險種
+            </button>
+        </div>
+        <div class="row panel"></div>
+        <label style="color:#3a87ad; margin-bottom:0px;">
+            承保內容
+        </label>
+        <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <div class="top"></div>
+            <table id="tblInsuranceList" style="width:100%; margin-top:5px"
+                   class="display table table-striped table-bordered table-hover dt-responsive dataTable no-footer dtr-inline"
+                   role="grid">
+                <thead>
+                    <tr role="row">
+                        <th class="text-center custom-middle-align sorting" tabindex="0"
+                            aria-controls="tblInsuranceList" rowspan="1" colspan="1" style="" aria-label=": 升冪排列"></th>
+                        <th class="text-center custom-middle-align sorting" tabindex="0"
+                            aria-controls="tblInsuranceList" rowspan="1" colspan="1" style="" aria-label=": 升冪排列"></th>
+                        <th colspan="2" class="text-center" rowspan="1" style=""> 險種 </th>
+                        <th class="text-center text-right custom-middle-align sorting" style="white-space: nowrap;"
+                            tabindex="0" aria-controls="tblInsuranceList" rowspan="1" colspan="1"
+                            aria-label=" 保額一
+                            升冪排列">保額一</th>
+                        <th class="text-center text-right custom-middle-align sorting" style="white-space: nowrap;"
+                            tabindex="0" aria-controls="tblInsuranceList" rowspan="1" colspan="1"
+                            aria-label=" 保額二
+                            升冪排列">保額二</th>
+                        <th class="text-center text-right custom-middle-align sorting" style="white-space: nowrap;"
+                            tabindex="0" aria-controls="tblInsuranceList" rowspan="1" colspan="1"
+                            aria-label=" 保額三
+                            升冪排列">保額三</th>
+                        <th class="text-center custom-middle-align sorting" style="white-space: nowrap;" tabindex="0"
+                            aria-controls="tblInsuranceList" rowspan="1" colspan="1" aria-label=" 自負額
+                            升冪排列">自負額</th>
+                        <th class="text-center text-right custom-middle-align sorting" style="white-space: nowrap;"
+                            tabindex="0" aria-controls="tblInsuranceList" rowspan="1" colspan="1"
+                            aria-label=" 保險費
+                            升冪排列">保險費</th>
+                    </tr>
+                </thead>
+
+                <tbody style="">
+                    <tr class="odd">
+                        <td valign="top" colspan="9" class="dataTables_empty">沒有符合的結果</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="bottom"></div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 input-group">
+            <input-text-unit title-name="總保費NT" v-bind:class-enum="colSize.Middle7" placeholder="總保費NT" unit-name="元">
+                </input-text-unit>
+                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 col-lg-offset-5 col-md-offset-0 input-group">
+                    <button type="button" style="width:100%;" class="btn btn-primary" id="btnCalPre">
+                        <i class="fa fa-calculator"></i> 計算保費
+                    </button>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 input-group">
+                    <button type="button" style="width:100%;" class="btn btn-info" id="btnPreview">
+                        <i class="fa"></i>
+                        預覽
+                    </button>
+                </div>
+        </div>
+        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.InsInfoAction" v-on:click="changeAction()"></hotain-button>
+        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="!context.InsInfoAction" v-on:click="jumpAction('JumpToInsInfo')"></hotain-button>
+    </panel>
+    <panel title-name="其他約定事項" v-bind:show-body="current == 'OtherData'">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 input-group">
+            <span class="input-group-addon">附加被保險人</span>
+            <input id="iptAddIns" type="text" class="form-control upperCase hftofl" maxlength="47" placeholder="附加被保險人"
+                   autocomplete="off" disabled="disabled">
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 input-group">
+            <span class="input-group-addon">抵押權人</span>
+            <input id="iptMortgage" type="text" class="form-control upperCase hftofl" maxlength="47" placeholder="抵押權人"
+                   autocomplete="off" disabled="disabled">
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+            <span class="input-group-addon">約定駕駛人</span>
+            <input id="iptAGRDRI01" type="text" class="form-control upperCase hftofl" maxlength="10" placeholder="約定駕駛人"
+                   autocomplete="off" disabled="disabled">
+        </div>
+        <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+            <input id="iptAGRDRI02" type="text" class="form-control upperCase hftofl" maxlength="10" placeholder=""
+                   autocomplete="off" disabled="disabled">
+        </div>
+        <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+            <input id="iptAGRDRI03" type="text" class="form-control upperCase hftofl" maxlength="10" placeholder=""
+                   autocomplete="off" disabled="disabled">
+        </div>
+        <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+            <input id="iptAGRDRI04" type="text" class="form-control upperCase hftofl" maxlength="10" placeholder=""
+                   autocomplete="off" disabled="disabled">
+        </div>
+        <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 input-group" style="display:none;">
+            <input id="iptAGRDRI05" type="text" class="form-control upperCase hftofl" maxlength="10" placeholder=""
+                   autocomplete="off" disabled="disabled">
+        </div>
+        <div class="row"></div>
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 input-group">
+            <span class="input-group-addon">記錄</span>
+            <textarea id="txtRecords" rows="3" class="form-control hftofl" maxlength="500"
+                      disabled="disabled"></textarea>
+        </div>
+        <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group">
+            <button id="btnOpenUploadDiv" type="button" style="width:99%" class="btn btn-info" data-toggle="modal"
+                    onclick="return;" disabled="disabled">
+                <i class="fa fa-folder-o"></i> 附件上傳
+            </button>
+            <span id="uploadFileCount"></span>
+        </div>
+        <label id="labUploadMsg" style="color:blue; margin-bottom:0px;"></label>
+        <div class="row"></div>
+        <label style="color:#3a87ad; margin-bottom:0px;">
+            傷害險名冊
+            <input id="chkBen" type="checkbox" class="label_cbx" disabled="disabled" placeholder="" autocomplete="off">
+        </label>
+        <label style="color:#3a87ad; margin-bottom:0px;">
+            新頁
+            <input id="chkNewPageBen" type="checkbox" class="label_cbx" disabled="disabled" placeholder=""
+                   autocomplete="off">
+        </label>
+        <label id="labBenDataMsg" style="color:red"></label>
+        <div class="panel-info" id="panBenData">
+            <div class="panel-body" id="divBenData" style="padding-left:0px;">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                    <button type="button" style="width:100%" class="btn btn-info" id="btnBenNew" disabled="disabled">
+                        <i class="fa fa-user-plus"></i> 新增傷害險被保險人名冊
+                    </button>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                    <button type="button" style="width:100%" class="btn btn-info" id="btnUpload" disabled="disabled">
+                        <i class="fa fa-upload"></i> 上傳傷害險被保險人名冊
+                    </button>
+                </div>
+                <div class="row"></div>
+                <div id="divBenInputData" style="display:none;" class="panel-body">
+                    <div class="col-lg-6 input-group">
+                        <span class="input-group-addon"><span style="color:red;">＊</span>險種</span>
+                        <select id="selBenZCVRTYPE" class="form-control" required="" disabled="disabled"></select>
+                    </div>
+                    <div class="row"></div>
+                    <label style="color:#3a87ad; margin-bottom:0px;">列名駕駛人</label>&nbsp;&nbsp;
+                    <input id="chkIdenMEM" type="checkbox" class="label_cbx" placeholder="" autocomplete="off"
+                           disabled="disabled">
+                    <label for="chkIdenMEM" style="color:blue; margin-bottom:0px;">同被保險人</label>
+                    <div class="row"></div>
+                    <div class="panel-info">
+                        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 input-group">
+                            <span class="input-group-addon"><span style="color:red;">＊</span>姓名</span>
+                            <input id="iptDriZCNAME" type="text" class="form-control upperCase hftofl" maxlength="50"
+                                   required="" placeholder="姓名" autocomplete="off" disabled="disabled">
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon"><span style="color:red;">＊</span>ID</span>
+                            <input id="iptDriMEMBSEL" type="text" class="form-control upperCase" maxlength="10"
+                                   required="" placeholder="ID" autocomplete="off" disabled="disabled">
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 input-group">
+                            <span class="input-group-addon"><span style="color:red;">＊</span>與要保人關係</span>
+                            <select id="selDriRELA" class="form-control" required="" disabled="disabled">
+                                <option value=""> </option>
+                                <option value="01">01 - 本人</option>
+                                <option value="02">02 - 配偶</option>
+                                <option value="03">03 - 父母或子女</option>
+                                <option value="04">04 - 子女或父母</option>
+                                <option value="05">05 - 債務人或債權人</option>
+                                <option value="06">06 - 兄弟姐妹</option>
+                                <option value="07">07 - 生活費或教育費所仰給之人</option>
+                                <option value="08">08 - 為本人管理財產或利益之人</option>
+                                <option value="10">10 - 祖孫</option>
+                                <option value="12">12 - 僱傭</option>
+                                <option value="99">99 - 其他</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon"><span style="color:red;">＊</span>生日</span>
+                            <input id="iptDriCLTDOB" type="text" class="form-control form_selDate" istwyear="Y"
+                                   maxyear="-1" minyear="-100" required="" placeholder="生日" autocomplete="off"
+                                   disabled="disabled" style="display: none;">
+                            <span class="input-group-addon"
+                                  style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span><select id="selDriCLTDOBY" class="form-control"
+                                                                                                             style="padding-left:5px; min-width:75px !important;"
+                                                                                                             onchange="selDateChange('Y', 'iptDriCLTDOB');" required="" disabled="disabled">
+                                <option value="">年</option>
+                                <option value="2019">108</option>
+                                <option value="2018">107</option>
+                                <option value="2017">106</option>
+                                <option value="2016">105</option>
+                                <option value="2015">104</option>
+                                <option value="2014">103</option>
+                                <option value="2013">102</option>
+                                <option value="2012">101</option>
+                                <option value="2011">100</option>
+                                <option value="2010">99</option>
+                                <option value="2009">98</option>
+                                <option value="2008">97</option>
+                                <option value="2007">96</option>
+                                <option value="2006">95</option>
+                                <option value="2005">94</option>
+                                <option value="2004">93</option>
+                                <option value="2003">92</option>
+                                <option value="2002">91</option>
+                                <option value="2001">90</option>
+                                <option value="2000">89</option>
+                                <option value="1999">88</option>
+                                <option value="1998">87</option>
+                                <option value="1997">86</option>
+                                <option value="1996">85</option>
+                                <option value="1995">84</option>
+                                <option value="1994">83</option>
+                                <option value="1993">82</option>
+                                <option value="1992">81</option>
+                                <option value="1991">80</option>
+                                <option value="1990">79</option>
+                                <option value="1989">78</option>
+                                <option value="1988">77</option>
+                                <option value="1987">76</option>
+                                <option value="1986">75</option>
+                                <option value="1985">74</option>
+                                <option value="1984">73</option>
+                                <option value="1983">72</option>
+                                <option value="1982">71</option>
+                                <option value="1981">70</option>
+                                <option value="1980">69</option>
+                                <option value="1979">68</option>
+                                <option value="1978">67</option>
+                                <option value="1977">66</option>
+                                <option value="1976">65</option>
+                                <option value="1975">64</option>
+                                <option value="1974">63</option>
+                                <option value="1973">62</option>
+                                <option value="1972">61</option>
+                                <option value="1971">60</option>
+                                <option value="1970">59</option>
+                                <option value="1969">58</option>
+                                <option value="1968">57</option>
+                                <option value="1967">56</option>
+                                <option value="1966">55</option>
+                                <option value="1965">54</option>
+                                <option value="1964">53</option>
+                                <option value="1963">52</option>
+                                <option value="1962">51</option>
+                                <option value="1961">50</option>
+                                <option value="1960">49</option>
+                                <option value="1959">48</option>
+                                <option value="1958">47</option>
+                                <option value="1957">46</option>
+                                <option value="1956">45</option>
+                                <option value="1955">44</option>
+                                <option value="1954">43</option>
+                                <option value="1953">42</option>
+                                <option value="1952">41</option>
+                                <option value="1951">40</option>
+                                <option value="1950">39</option>
+                                <option value="1949">38</option>
+                                <option value="1948">37</option>
+                                <option value="1947">36</option>
+                                <option value="1946">35</option>
+                                <option value="1945">34</option>
+                                <option value="1944">33</option>
+                                <option value="1943">32</option>
+                                <option value="1942">31</option>
+                                <option value="1941">30</option>
+                                <option value="1940">29</option>
+                                <option value="1939">28</option>
+                                <option value="1938">27</option>
+                                <option value="1937">26</option>
+                                <option value="1936">25</option>
+                                <option value="1935">24</option>
+                                <option value="1934">23</option>
+                                <option value="1933">22</option>
+                                <option value="1932">21</option>
+                                <option value="1931">20</option>
+                                <option value="1930">19</option>
+                                <option value="1929">18</option>
+                                <option value="1928">17</option>
+                                <option value="1927">16</option>
+                                <option value="1926">15</option>
+                                <option value="1925">14</option>
+                                <option value="1924">13</option>
+                                <option value="1923">12</option>
+                                <option value="1922">11</option>
+                                <option value="1921">10</option>
+                                <option value="1920">9</option>
+                            </select><span class="input-group-addon"
+                                           style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span><select id="selDriCLTDOBM" class="form-control"
+                                                                                                                      style="padding-left:5px; min-width:57px !important;"
+                                                                                                                      onchange="selDateChange('M', 'iptDriCLTDOB');" required="" disabled="disabled">
+                                <option value="">月</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select><span class="input-group-addon"
+                                           style="width: 0px; padding: 0px; font-size: 0px; border: 0"></span><select id="selDriCLTDOBD" class="form-control"
+                                                                                                                      style="padding-left:5px; min-width:57px !important;"
+                                                                                                                      onchange="selDateChange('D', 'iptDriCLTDOB');" required="" disabled="disabled">
+                                <option value="">日</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon"><span style="color:red;">＊</span>性別</span>
+                            <select class="form-control" id="selDriCLTSEX" required="" disabled="disabled">
+                                <option value=""> </option>
+                                <option value="1">1 - 男</option>
+                                <option value="2">2 - 女</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon">聯絡電話</span>
+                            <input id="iptDriTEL" type="tel" class="form-control upperCase tel" maxlength="16"
+                                   placeholder="聯絡電話" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row"></div>
+                    <label style="color:#3a87ad; margin-bottom:0px;">受益人</label>
+                    <div class="row"></div>
+                    <div class="panel-info">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon"><span style="color:red;">＊</span>法定</span>
+                            <select id="selBenLEGAL" class="form-control" required="" disabled="disabled">
+                                <option value="Y" selected="">Y</option>
+                                <option value="N">N</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon"><span style="color:red;" related="Y">＊</span>受益人姓名</span>
+                            <input id="iptBenNAME" type="text" class="form-control upperCase hftofl" maxlength="12"
+                                   required="" placeholder="受益人姓名" autocomplete="off" disabled="disabled">
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon">
+                                <span style="color:red;"
+                                      related="Y">＊</span>與列名駕駛人的關係
+                            </span>
+                            <select id="selBenRELA" class="form-control" required="" disabled="disabled">
+                                <option value=""> </option>
+                                <option value="0">0 - 其他</option>
+                                <option value="1">1 - 配偶</option>
+                                <option value="2">2 - 子女</option>
+                                <option value="3">3 - 父母</option>
+                                <option value="4">4 - 兄弟姐妹</option>
+                                <option value="5">5 - 翁婿</option>
+                                <option value="6">6 - 婆媳</option>
+                                <option value="7">7 - 祖孫</option>
+                                <option value="8">8 - 姑姪</option>
+                                <option value="9">9 - 甥舅</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon">受益人電話</span>
+                            <input id="iptBenTEL" type="tel" class="form-control upperCase tel" maxlength="11"
+                                   placeholder="受益人電話" autocomplete="off" disabled="disabled">
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <span class="input-group-addon">地址</span>
+                            <select id="selBenADD1" class="form-control" disabled="disabled">
+                                <option value=""> </option>
+                                <option value="01">01 - 臺北市</option>
+                                <option value="02">02 - 基隆市</option>
+                                <option value="03">03 - 新北市</option>
+                                <option value="04">04 - 宜蘭縣</option>
+                                <option value="05">05 - 新竹市</option>
+                                <option value="06">06 - 新竹縣</option>
+                                <option value="07">07 - 桃園市</option>
+                                <option value="08">08 - 苗栗縣</option>
+                                <option value="09">09 - 臺中市</option>
+                                <option value="10">10 - 彰化縣</option>
+                                <option value="11">11 - 南投縣</option>
+                                <option value="12">12 - 嘉義市</option>
+                                <option value="13">13 - 嘉義縣</option>
+                                <option value="14">14 - 雲林縣</option>
+                                <option value="15">15 - 臺南市</option>
+                                <option value="16">16 - 高雄市</option>
+                                <option value="17">17 - 南海諸島</option>
+                                <option value="18">18 - 澎湖縣</option>
+                                <option value="19">19 - 屏東縣</option>
+                                <option value="20">20 - 臺東縣</option>
+                                <option value="21">21 - 花蓮縣</option>
+                                <option value="22">22 - 金門縣</option>
+                                <option value="23">23 - 連江縣</option>
+                            </select>
+                            <span class="input-group-addon input-group-narrow"></span>
+                            <select id="selBenADD2" class="form-control" disabled="disabled"></select>
+                            <span class="input-group-addon input-group-narrow"></span>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 input-group">
+                            <input id="iptBenADDO" type="text" class="form-control hftofl upperCase" maxlength="118"
+                                   placeholder="" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="row"></div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                        <button type="button" style="width:100%; display:none;" class="btn btn-primary" id="btnBenAdd"
+                                disabled="disabled">
+                            <i class="fa fa-floppy-o"></i> 確定新增
+                        </button>
+                        <button type="button" style="width:100%; display:none;" class="btn btn-primary" id="btnBenAlt"
+                                disabled="disabled">
+                            <i class="fa fa-floppy-o"></i> 確定儲存
+                        </button>
+                    </div>
+                </div>
+                <div class="row"></div>
+                <div id="divBenUploadData" style="display:none;" class="panel-body">
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                        <input type="file" id="File1" name="File1" style="display: none" accept=".xlsx" placeholder=""
+                               autocomplete="off" disabled="disabled">
+                        <input type="text" class="form-control" id="FakeFile1" style="width:auto" readonly=""
+                               placeholder="" autocomplete="off" disabled="disabled">
+                        <span class="input-group-btn">
+                            <button class="btn btn-info" type="button" id="FakeBrowseFile1" disabled="disabled">
+                                <i class="fa fa-search"></i>瀏覽檔案...
+                            </button>
+                        </span>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-6 input-group">
+                        <button type="button" class="btn btn-info" id="upload" style="width:100%" disabled="disabled">
+                            <i class="fa fa-upload"></i>上傳檔案
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row"></div>
+                <div class="panel-body" style="padding-left:0px; padding-right:5px;">
+                    <div id="tblBeneList_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="top"></div>
+                        <table id="tblBeneList" style="width: 100%;"
+                               class="display table table-striped table-bordered table-hover dt-responsive  dataTable no-footer dtr-inline"
+                               role="grid">
+                            <thead>
+                                <tr role="row">
+                                    <th class="text-center sorting_disabled" rowspan="1" colspan="1" style="width: 0px;"
+                                        aria-label="　"></th>
+                                    <th class="text-center sorting_disabled" rowspan="1" colspan="1" style="width: 0px;"
+                                        aria-label="　"></th>
+                                    <th class="text-center sorting" style="white-space: nowrap; width: 0px;"
+                                        tabindex="0" aria-controls="tblBeneList" rowspan="1" colspan="1"
+                                        aria-label=" 險種
+                                        升冪排列">險種</th>
+                                    <th class="text-center sorting" style="white-space: nowrap; width: 0px;"
+                                        tabindex="0" aria-controls="tblBeneList" rowspan="1" colspan="1"
+                                        aria-label=" 姓名
+                                        升冪排列">姓名</th>
+                                    <th class="text-center sorting" style="white-space: nowrap; width: 0px;"
+                                        tabindex="0" aria-controls="tblBeneList" rowspan="1" colspan="1"
+                                        aria-label=" 與要保人關係
+                                        升冪排列">與要保人關係</th>
+                                    <th class="text-center sorting" style="white-space: nowrap; width: 0px;"
+                                        tabindex="0" aria-controls="tblBeneList" rowspan="1" colspan="1"
+                                        aria-label=" ID
+                                        升冪排列">ID</th>
+                                    <th class="text-center sorting" style="white-space: nowrap; width: 0px;"
+                                        tabindex="0" aria-controls="tblBeneList" rowspan="1" colspan="1"
+                                        aria-label=" 生日
+                                        升冪排列">生日</th>
+                                    <th class="text-center sorting" style="white-space: nowrap; width: 0px;"
+                                        tabindex="0" aria-controls="tblBeneList" rowspan="1" colspan="1"
+                                        aria-label=" 性別 升冪排列">性別</th>
+                                    <th class="text-center text-left sorting" style="white-space: nowrap; width: 0px;"
+                                        tabindex="0" aria-controls="tblBeneList" rowspan="1" colspan="1"
+                                        aria-label=" 聯絡電話
+                                        升冪排列">聯絡電話</th>
+                                    <th class="text-center sorting" style="white-space: nowrap; width: 0px;"
+                                        tabindex="0" aria-controls="tblBeneList" rowspan="1" colspan="1"
+                                        aria-label=" 法定
+                                        升冪排列">法定</th>
+                                    <th class="text-center sorting" style="white-space: nowrap; width: 0px;"
+                                        tabindex="0" aria-controls="tblBeneList" rowspan="1" colspan="1"
+                                        aria-label=" 受益人
+                                        升冪排列">受益人</th>
+                                    <th class="text-center sorting" style="white-space: nowrap; width: 0px;"
+                                        tabindex="0" aria-controls="tblBeneList" rowspan="1" colspan="1"
+                                        aria-label=" 關係
+                                        升冪排列">關係</th>
+                                    <th class="text-center sorting" style="white-space: nowrap; width: 0px;"
+                                        tabindex="0" aria-controls="tblBeneList" rowspan="1" colspan="1"
+                                        aria-label=" 受益人電話
+                                        升冪排列">受益人電話</th>
+                                    <th class="text-center text-left sorting" style="white-space: nowrap; width: 0px;"
+                                        tabindex="0" aria-controls="tblBeneList" rowspan="1" colspan="1"
+                                        aria-label=" 地址
+                                        升冪排列">地址</th>
+                                </tr>
+                            </thead>
+                            <!--nowrap-->
+
+                            <tbody style="">
+                                <tr class="odd">
+                                    <td valign="top" colspan="14" class="dataTables_empty">沒有符合的結果</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="bottom"></div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row"></div>
+        <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group" style="display:none;">
+            <button type="button" id="btnNext6" class="btn btn-primary" style="width:100%;" disabled="disabled">
+                <i class="fa fa-arrow-down"></i> 下一步
+            </button>
+        </div>
+        <div class="col-lg-1 col-md-3 col-sm-6 col-xs-6 input-group" style="display:none;">
+            <button type="button" id="btnEdit6" class="btn btn-success" style="width:100%;" disabled="disabled">
+                <i class="fa fa-unlock"></i> 編輯
+            </button>
+        </div>
+        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.OtherDataAction" v-on:click="changeAction()"></hotain-button>
+        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="!context.OtherDataAction" v-on:click="jumpAction('JumpToOtherData')"></hotain-button>
+    </panel>
+    <template v-slot:buttom>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 col-lg-offset-2 input-group">
+            <button type="button" style="width:100%" class="btn btn-primary" id="btnStorCache">
+                <i class="fa fa-floppy-o"></i> 暫存
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 input-group">
+            <button type="button" style="width:100%" class="btn btn-primary" id="btnSubmit" disabled="disabled">
+                <i class="fa fa-paper-plane"></i> 確定
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 input-group">
+            <button type="button" style="width:100%" class="btn btn-default" id="btnClose">清除</button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 col-lg-offset-4 input-group" style="display:none;">
+            <button type="button" style="width:100%" class="btn btn-default" id="btnBack"
+                    onclick="history.back()">
+                返回
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 col-lg-offset-4 input-group" style="display:none;">
+            <button type="button" style="width:100%" class="btn btn-default" id="btnMobileInsure"
+                    onclick="">
+                檢視完成
+            </button>
+        </div>
+    </template>
 </main-panel>
+
 @section Scripts {
-    <script type="text/javascript" src="~/js/site.js"></script>
+    <script type="text/javascript" src="~/js/Page/EISQuotation/index.js"></script>
 }
+
