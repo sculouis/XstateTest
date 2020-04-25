@@ -13,7 +13,7 @@ const colSize = {
 
 function lookupItems(looktype) {
     var $d = $.Deferred()
-    var apiUrl = "/EISQuotation/LookupNameAttributes"
+    var apiUrl = "/Quotation/LookupNameAttributes"
     $.ajax({
         url: apiUrl,
         type: "POST",
@@ -92,7 +92,7 @@ const stateMachine = XState.Machine({
             on: {
                 NextStep: 'SalesManData'
             },
-            activities: ['getcode'],
+            activities: ['getcode','getaddress', 'getRelToPolicyHolder','getBeneficiaryRelToDriver','getpointdiff','getgrade','getHotMonthlyDepreciationRate'],
         },
         //招攬機構/業務人員資料
         SalesManData: {
@@ -106,7 +106,7 @@ const stateMachine = XState.Machine({
             on: {
                 NextStep: 'CarInfo'
             },
-            activities: ['getaddress', 'getRelToPolicyHolder','getBeneficiaryRelToDriver'],
+            activities: [],
         },
         //車籍資料
         CarInfo: {
@@ -119,7 +119,7 @@ const stateMachine = XState.Machine({
             on: {
                 NextStep: 'OtherData'
             },
-            activities: ['getpointdiff','getgrade','getHotMonthlyDepreciationRate'],
+            activities: [],
         },
         //其他約定事項
         OtherData: {
@@ -406,7 +406,7 @@ const app = new Vue({
             beneficiaryRelToDriver: [],
             paymentMethods: [],
             // Interpret the machine and store it in data
-            quoteService: XState.interpret(stateMachine),
+            quoteService: XState.interpret(stateMachine, { devTools: true }),
 
             stateMachine: stateMachine,
 
