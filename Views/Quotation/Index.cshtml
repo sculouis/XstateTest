@@ -43,8 +43,8 @@
         <date-ymd title-name="保期(起)" required v-show="model.selMVPZMTYPE !=''"></date-ymd>
         <date-ymd title-name="保期(迄)" required v-show="model.selMVPZMTYPE !=''"></date-ymd>
         <div class="row"></div>
-        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.QuoteBasicAction" v-on:click="changeAction()"></hotain-button>
-        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="!context.QuoteBasicAction" v-on:click="jumpAction('JumpToQuoteBasic')"></hotain-button>
+        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.QuoteBasicAction == 1" v-on:click="changeAction()"></hotain-button>
+        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="context.QuoteBasicAction == 2" v-on:click="jumpAction('JumpToQuoteBasic')"></hotain-button>
     </panel>
     <panel title-name="招攬機構/業務人員資料" v-bind:show-body="current == 'SalesManData'">
         <input-group title-name="招攬機構">
@@ -91,8 +91,8 @@
         </input-group>
         <input-text title-name="電銷人員代號" placeholder="電銷人員代號"></input-text>
         <div class="row"></div>
-        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.SalesManDataAction" v-on:click="changeAction()"></hotain-button>
-        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="!context.SalesManDataAction" v-on:click="jumpAction('JumpToSalesManData')"></hotain-button>
+        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.SalesManDataAction == 1" v-on:click="changeAction()"></hotain-button>
+        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="context.SalesManDataAction == 2" v-on:click="jumpAction('JumpToSalesManData')"></hotain-button>
     </panel>
     <panel title-name="要保人及被保險人資料" v-bind:show-body="current == 'InsurerData'">
         <label style="color:#3a87ad; margin-bottom:0px;">要保人資料</label>
@@ -195,8 +195,8 @@
         <input-text title-name="3碼" placeholder="地址" v-bind:class-enum="colSize.Big" disabled></input-text>
         <normal-select title-name="與要保人關係" v-bind:class-enum="colSize.Big" required v-bind:items="context.RelToPolicyHolder"></normal-select>
         <div class="row"></div>
-        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.InsurerDataAction" v-on:click="changeAction()"></hotain-button>
-        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="!context.InsurerDataAction" v-on:click="jumpAction('JumpToInsurerData')"></hotain-button>
+        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.InsurerDataAction == 1" v-on:click="changeAction()"></hotain-button>
+        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="context.InsurerDataAction == 2" v-on:click="jumpAction('JumpToInsurerData')"></hotain-button>
     </panel>
     <panel title-name="車籍資料" v-bind:show-body="current == 'CarInfo'">
         <select-piker title-name="廠型" placeholder="沒有選取任何項目" required disabled></select-piker>
@@ -210,8 +210,8 @@
         <input-text title-name="牌照" placeholder="牌照"></input-text>
         <input-text title-name="引擎/車身編號" placeholder="引擎/車身編號"></input-text>
         <div class="row"></div>
-        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.CarInfoAction" v-on:click="changeAction()"></hotain-button>
-        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="!context.CarInfoAction" v-on:click="jumpAction('JumpToCarInfo')"></hotain-button>
+        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.CarInfoAction == 1" v-on:click="changeAction()"></hotain-button>
+        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="context.CarInfoAction == 2" v-on:click="jumpAction('JumpToCarInfo')"></hotain-button>
     </panel>
     <panel title-name="投保險種類" v-bind:show-body="current == 'InsInfo'">
         <label style="color:#3a87ad; margin-bottom:0px;">
@@ -321,8 +321,8 @@
                     </button>
                 </div>
         </div>
-        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.InsInfoAction" v-on:click="changeAction()"></hotain-button>
-        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="!context.InsInfoAction" v-on:click="jumpAction('JumpToInsInfo')"></hotain-button>
+        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.InsInfoAction == 1" v-on:click="changeAction()"></hotain-button>
+        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="context.InsInfoAction == 2" v-on:click="jumpAction('JumpToInsInfo')"></hotain-button>
     </panel>
     <panel title-name="其他約定事項" v-bind:show-body="current == 'OtherData'">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 input-group">
@@ -777,8 +777,8 @@
                 <i class="fa fa-unlock"></i> 編輯
             </button>
         </div>
-        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.OtherDataAction" v-on:click="changeAction()"></hotain-button>
-        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="!context.OtherDataAction" v-on:click="jumpAction('JumpToOtherData')"></hotain-button>
+        <hotain-button title-name="下一步" btn-name="btn-primary" icon-name="fa-arrow-down" v-bind:show-button="context.OtherDataAction == 1" v-on:click="changeAction()"></hotain-button>
+        <hotain-button title-name="編輯" btn-name="btn-success" icon-name="fa-unlock" v-bind:show-button="context.OtherDataAction == 2" v-on:click="jumpAction('JumpToOtherData')"></hotain-button>
     </panel>
     <template v-slot:buttom>
         <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 col-lg-offset-2 input-group">
