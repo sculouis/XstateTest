@@ -76,7 +76,7 @@ const stateMachine = XState.Machine({
             },
             entry: ['setAction'],
             exit: ['setUnAction'],
-            activities: ['getcode', 'getaddress', 'getRelToPolicyHolder', 'getBeneficiaryRelToDriver', 'getpointdiff', 'getgrade', 'getHotMonthlyDepreciationRate'],
+            //activities: ['getcode', 'getaddress', 'getRelToPolicyHolder', 'getBeneficiaryRelToDriver', 'getpointdiff', 'getgrade', 'getHotMonthlyDepreciationRate'],
         },
         //招攬機構/業務人員資料
         SalesManData: {

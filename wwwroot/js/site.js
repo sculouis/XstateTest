@@ -43,6 +43,10 @@ Vue.component('hotai-menu', {
                 {
                     uri: "/Quotation",
                     name: '新件報價'
+                },
+                {
+                    uri:"/Home/Xstate",
+                    name:"Xstate模組化"
                 }
             ]
         }
@@ -283,6 +287,7 @@ Vue.component('hotai-table', {
 )
 
 
+
 //程式主體
 var app = new Vue({
     el: '#container',
@@ -308,40 +313,11 @@ var app = new Vue({
     }
 })
 
-const { Machine, actions, interpret } = XState; // global vari
-
-const toggleMachine = Machine({
-    id: 'toggle',
-    context: {
-      /* some data */
-    },
-    initial: 'inactive',
-    states: {
-      inactive: {
-        on: { TOGGLE: 'active' }
-      },
-      active: {
-        on: { TOGGLE: 'inactive' }
-      }
-    }
-  });
-
-  console.log(toggleMachine.initialState)
-
- var stateService = interpret(toggleMachine)
-
- stateService.start()
- console.log('初始值')
- console.log(stateService.state.value)
- stateService.send('TOGGLE')
- console.log('轉換後')
- console.log(stateService.state.value)
 
 
-$(function () {
-    $.get("https://localhost:5001/Home/GetTestData", function (result) {
-        console.log(result);
-    });
+// $(function () {
+//     $.get("https://localhost:5001/Home/GetTestData", function (result) {
+//         console.log(result);
+//     });
 
-
-})
+// })

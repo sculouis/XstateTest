@@ -1,0 +1,24 @@
+@{
+    ViewData["Title"] = "Xstate 測試";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div id="xstateTest">
+    <search title-name="查詢區" v-bind:show-body="showSearch" v-bind:current="current"></search>
+</div>
+@section Scripts {
+    <script type="text/javascript" src="~/js/testxstate.js"></script>
+}
+
+<template id="search">
+    <div class="panel panel-info" v-cloak>
+        <div class="panel-heading data">
+            {{titleName}}
+        </div>
+        <div class="panel-body" v-show="showBody">
+            <input-text title-name="報價單號"></input-text>
+            <button v-on:click="onFetch()" class="btn btn-primary">切換</button>
+            <p v-html="current"></p>
+        </div>
+    </div>
+</template>

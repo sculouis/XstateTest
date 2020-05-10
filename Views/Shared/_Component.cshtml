@@ -3,7 +3,7 @@
     <div id="menu" class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
-                <li v-for="menu in menus" key="menu.uri">
+                <li v-for="(menu,index) in menus" key="index">
                     <a v-bind:href="menu.uri"><i class="fa fa-bookmark-o"></i>&nbsp;{{menu.name}}</a>
                 </li>
                 @* <li class="">
