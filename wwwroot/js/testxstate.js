@@ -1,4 +1,4 @@
-const { Machine, actions, interpret } = XState; // global vari
+const { Machine, actions, interpret } = XState; // global variable
 
 var machine = Machine({
     id: 'toggle',
@@ -8,13 +8,42 @@ var machine = Machine({
     initial: 'inactive',
     states: {
       inactive: {
-        on: { TOGGLE: 'active' }
+        on: { TOGGLE: 'active' },
+        entry: ['setSearchFlag']
       },
       active: {
-        on: { TOGGLE: 'inactive' }
+        on: { TOGGLE: 'inactive' },
+        entry: ['setResultFlag']
       }
-    }
-  });
+    },
+  },    
+  {actions: {
+    //進入此狀態設定為下一步xxxxAction = 1
+    setSearchFlag: function (context, event) {
+        context.ActionFlag.showSearch = true
+        context.ActionFlag.showResult = false
+        console.log(context.ActionFlag.showSearch)
+        console.log("entry:" + event.type)
+    },
+    setResultFlag: function (context, event) {
+      context.ActionFlag.showSearch = false
+      context.ActionFlag.showResult = true
+      console.log(context.ActionFlag.showSearch)
+      console.log("entry:" + event.type)
+  }
+
+  }
+}
+);
+
+  // define context
+const machineContext = machine.withContext({
+  ActionFlag: {
+    showSearch:true,
+    showResult:false,
+},
+})
+
  
 var Search = {
     template: '#search',
@@ -26,10 +55,21 @@ var Search = {
     }
   };
 
+var Result = {
+  template: '#result',
+  props:['current','titleName','showBody'],
+  methods: {
+    onFetch: function() {
+        this.$parent.onFetch()
+    }
+  }
+};
+
 var example2 = new Vue({
     el: '#xstateTest',
     components: {
-        'search': Search
+        'search': Search,
+        'query-result':Result
       },
     created: function () {
         var vm = this
@@ -45,19 +85,21 @@ var example2 = new Vue({
     },
     data: function () {
         return {
-            showSearch:true,
-            current: machine.initial,
-            context: machine.context,
+            current: machineContext.initial,
+            context: machineContext.context,
             // Interpret the machine and store it in data
-            service: interpret(machine, {
+            service: interpret(machineContext, {
                 devTools: true
             }),
         }
     },
-    computed: {
-        fetchContext:function() {
-            return this.context;
-        }
+    computed:{
+      showSearch:function(){
+        return this.context.ActionFlag.showSearch
+      },
+      showResult:function(){
+        return this.context.ActionFlag.showResult
+      }
     },
     methods: {
         onFetch() {
